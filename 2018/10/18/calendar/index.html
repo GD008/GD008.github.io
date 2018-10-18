@@ -16,7 +16,7 @@
 <meta property="og:description" content="2018护网杯calendar WP(萌新向)护网杯结束也有一段时间了（被虐惨了。。），各位大佬战队的WP也相继出炉，不过部分题目的WP不够详细，对于刚入门的小白来说可能会有点难看懂。今天有空就来写下pwn题calendar的wp，也刚好做个笔记吧。讲到这题，很遗憾，我是赛后才复现出来的，因为当时有各种细节没处理好，而且远程爆破也是讲究玄学的，这也许就是这道题目值800分所在吧。 解题思路其实这题">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://gd.com/calendar/1539688575059.png">
-<meta property="og:updated_time" content="2018-10-18T05:40:54.151Z">
+<meta property="og:updated_time" content="2018-10-18T06:02:43.433Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="calendar">
 <meta name="twitter:description" content="2018护网杯calendar WP(萌新向)护网杯结束也有一段时间了（被虐惨了。。），各位大佬战队的WP也相继出炉，不过部分题目的WP不够详细，对于刚入门的小白来说可能会有点难看懂。今天有空就来写下pwn题calendar的wp，也刚好做个笔记吧。讲到这题，很遗憾，我是赛后才复现出来的，因为当时有各种细节没处理好，而且远程爆破也是讲究玄学的，这也许就是这道题目值800分所在吧。 解题思路其实这题">
@@ -178,7 +178,7 @@
       
         <h1 id="2018护网杯calendar-WP-萌新向"><a href="#2018护网杯calendar-WP-萌新向" class="headerlink" title="2018护网杯calendar WP(萌新向)"></a>2018护网杯calendar WP(萌新向)</h1><p>护网杯结束也有一段时间了（被虐惨了。。），各位大佬战队的WP也相继出炉，不过部分题目的WP不够详细，对于刚入门的小白来说可能会有点难看懂。今天有空就来写下pwn题calendar的wp，也刚好做个笔记吧。讲到这题，很遗憾，我是赛后才复现出来的，因为当时有各种细节没处理好，而且远程爆破也是讲究玄学的，这也许就是这道题目值800分所在吧。</p>
 <h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>其实这题最坑的就是没办法泄露出libc，要利用house of Roman爆破12 bit来getshell。首先fastbin attack使得malloc hook可以任意写，修复fastbin后利用unsorted bin attack使malloc hook指向main_arena+88的地方，最后利用uaf部分地址写把one_gadget的低三字节写入malloc hook，本地调试的时候可以把ASLR关了，接着就剩玄学的远程爆破了。</p>
-<h3 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h3><h4 id="1、先简单运行一下程序，查看保护。"><a href="#1、先简单运行一下程序，查看保护。" class="headerlink" title="1、先简单运行一下程序，查看保护。"></a>1、先简单运行一下程序，查看保护。</h4><p><img src="/calendar/1539688575059.png" alt="1539688575059"></p>
+<h3 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h3><h4 id="1、先简单运行一下程序，查看保护。"><a href="#1、先简单运行一下程序，查看保护。" class="headerlink" title="1、先简单运行一下程序，查看保护。"></a>1、先简单运行一下程序，查看保护。</h4><p><img src="/calendar/1539688575059.png" alt=""></p>
 
       
 
