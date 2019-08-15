@@ -55,12 +55,12 @@
   };
 </script>
 
-  <meta name="description" content="浅析栈溢出遇到的两种坑及绕过技巧0x00前言对于刚开始入门pwn的萌新来说可能会遇到一些坑，这里我就来总结一下我之前做栈溢出的时候遇到的两种坑以及绕过技巧，具体我会通过例题来讲解，希望对此时正在入门的pwn的萌新能带来一些帮助。 0x01绕过canarycanary是linux下的保护机制，它会保存在栈的某个位置上，一般来说64位的话会在rbp-0x8的位置，32位则在ebp-0x4的位置。当我们">
+  <meta name="description" content="浅析栈溢出遇到的两种坑及绕过技巧0x00前言对于刚开始入门pwn的萌新来说可能会遇到一些坑，这里我就来总结一下我之前做栈溢出的时候遇到的两种坑以及绕过技巧，具体我会通过例题来讲解，希望对此时正在入门的pwn的萌新能带来一些帮助。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅析栈溢出遇到的两种坑及绕过技巧">
 <meta property="og:url" content="http://GD.com/2018/11/20/rop/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="浅析栈溢出遇到的两种坑及绕过技巧0x00前言对于刚开始入门pwn的萌新来说可能会遇到一些坑，这里我就来总结一下我之前做栈溢出的时候遇到的两种坑以及绕过技巧，具体我会通过例题来讲解，希望对此时正在入门的pwn的萌新能带来一些帮助。 0x01绕过canarycanary是linux下的保护机制，它会保存在栈的某个位置上，一般来说64位的话会在rbp-0x8的位置，32位则在ebp-0x4的位置。当我们">
+<meta property="og:description" content="浅析栈溢出遇到的两种坑及绕过技巧0x00前言对于刚开始入门pwn的萌新来说可能会遇到一些坑，这里我就来总结一下我之前做栈溢出的时候遇到的两种坑以及绕过技巧，具体我会通过例题来讲解，希望对此时正在入门的pwn的萌新能带来一些帮助。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://gd.com/2018/11/20/rop/1.jpg">
 <meta property="og:image" content="http://gd.com/2018/11/20/rop/2.png">
@@ -74,10 +74,10 @@
 <meta property="og:image" content="http://gd.com/2018/11/20/rop/10.jpg">
 <meta property="og:image" content="http://gd.com/2018/11/20/rop/11.jpg">
 <meta property="og:image" content="http://gd.com/2018/11/20/rop/12.png">
-<meta property="og:updated_time" content="2019-08-14T16:40:57.634Z">
+<meta property="og:updated_time" content="2019-08-15T01:26:26.962Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅析栈溢出遇到的两种坑及绕过技巧">
-<meta name="twitter:description" content="浅析栈溢出遇到的两种坑及绕过技巧0x00前言对于刚开始入门pwn的萌新来说可能会遇到一些坑，这里我就来总结一下我之前做栈溢出的时候遇到的两种坑以及绕过技巧，具体我会通过例题来讲解，希望对此时正在入门的pwn的萌新能带来一些帮助。 0x01绕过canarycanary是linux下的保护机制，它会保存在栈的某个位置上，一般来说64位的话会在rbp-0x8的位置，32位则在ebp-0x4的位置。当我们">
+<meta name="twitter:description" content="浅析栈溢出遇到的两种坑及绕过技巧0x00前言对于刚开始入门pwn的萌新来说可能会遇到一些坑，这里我就来总结一下我之前做栈溢出的时候遇到的两种坑以及绕过技巧，具体我会通过例题来讲解，希望对此时正在入门的pwn的萌新能带来一些帮助。">
 <meta name="twitter:image" content="http://gd.com/2018/11/20/rop/1.jpg">
   <link rel="canonical" href="http://GD.com/2018/11/20/rop/">
 
@@ -250,7 +250,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-15 00:40:57" itemprop="dateModified" datetime="2019-08-15T00:40:57+08:00">2019-08-15</time>
+                <time title="修改时间：2019-08-15 09:26:26" itemprop="dateModified" datetime="2019-08-15T09:26:26+08:00">2019-08-15</time>
               </span>
             
           
@@ -266,7 +266,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="浅析栈溢出遇到的两种坑及绕过技巧"><a href="#浅析栈溢出遇到的两种坑及绕过技巧" class="headerlink" title="浅析栈溢出遇到的两种坑及绕过技巧"></a>浅析栈溢出遇到的两种坑及绕过技巧</h1><h1 id="0x00前言"><a href="#0x00前言" class="headerlink" title="0x00前言"></a>0x00前言</h1><p>对于刚开始入门pwn的萌新来说可能会遇到一些坑，这里我就来总结一下我之前做栈溢出的时候遇到的两种坑以及绕过技巧，具体我会通过例题来讲解，希望对此时正在入门的pwn的萌新能带来一些帮助。</p>
+        <h1 id="浅析栈溢出遇到的两种坑及绕过技巧"><a href="#浅析栈溢出遇到的两种坑及绕过技巧" class="headerlink" title="浅析栈溢出遇到的两种坑及绕过技巧"></a>浅析栈溢出遇到的两种坑及绕过技巧</h1><h1 id="0x00前言"><a href="#0x00前言" class="headerlink" title="0x00前言"></a>0x00前言</h1><p>对于刚开始入门pwn的萌新来说可能会遇到一些坑，这里我就来总结一下我之前做栈溢出的时候遇到的两种坑以及绕过技巧，具体我会通过例题来讲解，希望对此时正在入门的pwn的萌新能带来一些帮助。<a id="more"></a></p>
 <h1 id="0x01绕过canary"><a href="#0x01绕过canary" class="headerlink" title="0x01绕过canary"></a>0x01绕过canary</h1><p>canary是linux下的保护机制，它会保存在栈的某个位置上，一般来说64位的话会在rbp-0x8的位置，32位则在ebp-0x4的位置。当我们进行栈溢出的时候如果覆盖了canary值，程序就会调用<strong>stack_chk_fail</strong>来打印报错信息。在做题的时候最烦的就是这种，大大增加了栈溢出时的难度。通常有以下几种绕过方法：</p>
 <p><strong>1、通过read函数泄露canary。</strong>关键的一点就是read函数读取字符串的时候不会在末尾加上“\x00”,这就是gets函数不能用来泄露canary的原因（有些输出函数遇到‘\0’会截断）。</p>
 <p><strong>2、暴力破解canary。</strong>这种方法利用起来有限制，就是一般要程序中有fork函数创造出子进程，因为子进程是父进程复制出来的，所以canary也就跟父进程相同，在子进程中覆盖canary后报错就会退回到父进程，此时canary的值是不会改变的。</p>
