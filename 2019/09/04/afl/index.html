@@ -63,9 +63,9 @@
 <meta property="og:description" content="利用afl进行二进制漏洞挖掘安装解压： 12sudo apt-get install afltar -zxvf afl-latest.tgz 我们选择写个有栈溢出漏洞的程序">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://gd.com/2019/09/04/afl/1567559804.jpg">
-<meta property="og:image" content="http://gd.com/2019/09/04/afl/1567560269(1">
-<meta property="og:image" content="http://gd.com/2019/09/04/afl/1567560429(1">
-<meta property="og:updated_time" content="2019-09-04T04:21:41.425Z">
+<meta property="og:image" content="http://gd.com/2019/09/04/afl/1567560269.png">
+<meta property="og:image" content="http://gd.com/2019/09/04/afl/1567560429.png">
+<meta property="og:updated_time" content="2019-09-04T09:20:38.760Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用afl进行二进制漏洞挖掘">
 <meta name="twitter:description" content="利用afl进行二进制漏洞挖掘安装解压： 12sudo apt-get install afltar -zxvf afl-latest.tgz 我们选择写个有栈溢出漏洞的程序">
@@ -230,7 +230,7 @@
                 
               
 
-              <time title="创建时间：2019-09-04 09:00:35 / 修改时间：12:21:41" itemprop="dateCreated datePublished" datetime="2019-09-04T09:00:35+08:00">2019-09-04</time>
+              <time title="创建时间：2019-09-04 09:00:35 / 修改时间：17:20:38" itemprop="dateCreated datePublished" datetime="2019-09-04T09:00:35+08:00">2019-09-04</time>
             </span>
           
             
@@ -259,9 +259,9 @@
 <p>echo core &gt;/proc/sys/kernel/core_pattern</p>
 <p>然后我们就可以用官方的测试用例进行fuzz</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir fuzz_out</span><br><span class="line">afl-fuzz -i /root/pwn/afl-2.52b/testcases/others/text -o fuzz_out/ ./test</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/09/04/afl/1567560269(1" alt="1567560269(1)">.png)</p>
+<p><img src="/2019/09/04/afl/1567560269.png" alt="1567560269(1)"></p>
 <p>成功跑出一个crash，查看文件</p>
-<p><img src="/2019/09/04/afl/1567560429(1" alt="1567560429(1)">.png)</p>
+<p><img src="/2019/09/04/afl/1567560429.png" alt="1567560429(1)"></p>
 <p>是因为文件中的hello字符被语料库变异成TelTTTTTTTTTTTTTTTTTTTT,TTT的字符串过长导致栈溢出崩溃</p>
 <p>① Process timing:Fuzzer运行时长、以及距离最近发现的路径、崩溃和挂起经过了多长时间。<br>② Overall results：Fuzzer当前状态的概述。<br>③ Cycle progress：我们输入队列的距离。<br>④ Map coverage：目标二进制文件中的插桩代码所观察到覆盖范围的细节。<br>⑤ Stage progress：Fuzzer现在正在执行的文件变异策略、执行次数和执行速度。<br>⑥ Findings in depth：有关我们找到的执行路径，异常和挂起数量的信息。<br>⑦ Fuzzing strategy yields：关于突变策略产生的最新行为和结果的详细信息。<br>⑧ Path geometry：有关Fuzzer找到的执行路径的信息。<br>⑨ CPU load：CPU利用率<br>最后就可以用GDB调试崩溃的程序啦。</p>
 
