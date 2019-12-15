@@ -55,18 +55,28 @@
   };
 </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="抓包分析手机登录处抓包">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://GD.com/2018/10/12/hello-world/index.html">
+<meta property="og:title" content="逆向家长帮安卓app的sign算法">
+<meta property="og:url" content="http://GD.com/2019/12/15/nixiang/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="抓包分析手机登录处抓包">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-12T11:54:45.877Z">
+<meta property="og:image" content="http://gd.com/2019/12/15/nixiang/1.jpg">
+<meta property="og:image" content="http://gd.com/2019/12/15/nixiang/1576386931.jpg">
+<meta property="og:image" content="http://gd.com/2019/12/15/nixiang/1576389630.png">
+<meta property="og:image" content="http://gd.com/2019/12/15/nixiang/1576391155(1">
+<meta property="og:image" content="http://gd.com/2019/12/15/nixiang/1576391327(1">
+<meta property="og:image" content="http://gd.com/2019/12/15/nixiang/1576391447(1">
+<meta property="og:image" content="http://gd.com/2019/12/15/nixiang/1576391699(1">
+<meta property="og:image" content="http://gd.com/2019/12/15/nixiang/1576392914(1">
+<meta property="og:image" content="http://gd.com/2019/12/15/nixiang/1576392955(1">
+<meta property="og:updated_time" content="2019-12-15T07:00:02.715Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-  <link rel="canonical" href="http://GD.com/2018/10/12/hello-world/">
+<meta name="twitter:title" content="逆向家长帮安卓app的sign算法">
+<meta name="twitter:description" content="抓包分析手机登录处抓包">
+<meta name="twitter:image" content="http://gd.com/2019/12/15/nixiang/1.jpg">
+  <link rel="canonical" href="http://GD.com/2019/12/15/nixiang/">
 
 
 <script id="page-configurations">
@@ -80,7 +90,7 @@
   };
 </script>
 
-  <title>Hello World | Hexo</title>
+  <title>逆向家长帮安卓app的sign算法 | Hexo</title>
   
 
 
@@ -195,7 +205,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://GD.com/2018/10/12/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://GD.com/2019/12/15/nixiang/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="GD">
@@ -209,7 +219,7 @@
       <header class="post-header">
 
         
-          <h1 class="post-title" itemprop="name headline">Hello World
+          <h1 class="post-title" itemprop="name headline">逆向家长帮安卓app的sign算法
 
             
           </h1>
@@ -226,8 +236,12 @@
                 
               
 
-              <time title="创建时间：2018-10-12 19:54:45" itemprop="dateCreated datePublished" datetime="2018-10-12T19:54:45+08:00">2018-10-12</time>
+              <time title="创建时间：2019-12-15 09:20:18 / 修改时间：15:00:02" itemprop="dateCreated datePublished" datetime="2019-12-15T09:20:18+08:00">2019-12-15</time>
             </span>
+          
+            
+
+            
           
 
           
@@ -241,15 +255,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h1 id="抓包分析"><a href="#抓包分析" class="headerlink" title="抓包分析"></a>抓包分析</h1><p>手机登录处抓包</p>
+<a id="more"></a>
+<p><img src="/2019/12/15/nixiang/1.jpg" alt="1"></p>
+<p>发现有个sign参数</p>
+<p><img src="/2019/12/15/nixiang/1576386931.jpg" alt="1576386920790"></p>
+<p>用不同的手机号点击发送验证码，抓包发现每次sign都不同，于是猜这个sign肯定是在本地加密的，开始逆出它的算法。</p>
+<h1 id="脱壳"><a href="#脱壳" class="headerlink" title="脱壳"></a>脱壳</h1><p>把apk解压出来，发现它只有一个dex文件，猜它是加了壳，用工具查壳</p>
+<p><img src="/2019/12/15/nixiang/1576389630.png" alt="1576389630"></p>
+<p>该app用了360加固，加固的方式有加密apk文件与脱壳程序放到一起组合成一个dex文件，然后再动态解密和加载，还有指令抽取和最新的vmp加固</p>
+<p>我这里脱壳用的是FDex2工具，其原理是利用xposed的hook框架，动态地把dex给dump下来，发现有10个dex，其中有一个是加壳的程序，于是用jadx打开每个dex，全局查找字符串接口user/vip/sendcode</p>
+<p><img src="/2019/12/15/nixiang/1576391155(1" alt="1576390784970">.jpg)</p>
+<p>找到了类com.deu.bang.interactor.GetValidateCodeApi</p>
+<p><img src="/2019/12/15/nixiang/1576391327(1" alt="1576391327(1)">.png)</p>
+<p>发现该sign是通过a.b()加密的，于是进一步查看</p>
+<p><img src="/2019/12/15/nixiang/1576391447(1" alt="1576391447(1)">.png)</p>
+<p>这里是获取时间和一段哈希值加上mobile和version的值转换成数组，用u.a()函数进一步加密</p>
+<p>查看u.a()</p>
+<p><img src="/2019/12/15/nixiang/1576391699(1" alt="1576391699(1)">.png)</p>
+<p>这里是用MD5加密后再进行一系列的异或、与运算和移位操作，这样就逆出了sign的加密算法</p>
+<h1 id="用frida工具直接hook改手机号码"><a href="#用frida工具直接hook改手机号码" class="headerlink" title="用frida工具直接hook改手机号码"></a>用frida工具直接hook改手机号码</h1><p>先hook com.eduu.bang.util.u的a函数查看它的参数，然后再hook改参数，这里也可以用xposed的hook框架，但是由于frida比较轻便，所以这里就选择了frida，这里直接改byte数组，手机号码改为13712345678，具体的脚本如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import frida, sys</span><br><span class="line"> </span><br><span class="line">def on_message(message, data):</span><br><span class="line">    if message[&apos;type&apos;] == &apos;send&apos;:</span><br><span class="line">        print(&quot;[*] &#123;0&#125;&quot;.format(message[&apos;payload&apos;]))</span><br><span class="line">    else:</span><br><span class="line">        print(message)</span><br><span class="line"> </span><br><span class="line">jscode = &quot;&quot;&quot;</span><br><span class="line">Java.perform(function () &#123;</span><br><span class="line">    var MainActivity = Java.use(&apos;com.eduu.bang.util.u&apos;);</span><br><span class="line">    MainActivity.a.overload(&apos;[B&apos;).implementation = function () &#123;</span><br><span class="line">        send(&quot;Hook Start...&quot;);</span><br><span class="line">   			var arr = Java.use(&quot;java.util.Arrays&quot;);</span><br><span class="line">				console.log(arr.toString(arguments[0]));</span><br><span class="line">				var buf=[53, 98, 55, 99, 99, 57, 52, 99, 50, 56, 52, 102, 52, 100, 97, 100, 55, 52, 53, 101, 51, 52, 51, 100, 55, 100, 54, 54, 102, 97, 101, 101, 50, 48, 49, 57, 49, 50, 48, 49, 123, 34, 109, 111, 98, 105, 108, 101, 34, 58, 34, 49, 51, 55, 49, 50, 51, 52, 53, 54, 55, 56, 34, 44, 34, 118, 101, 114, 115, 105, 111, 110, 34, 58, 34, 55, 46, 51, 34, 125];</span><br><span class="line">      </span><br><span class="line">				return this.a(buf);</span><br><span class="line"></span><br><span class="line">       </span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"> </span><br><span class="line">process = frida.get_usb_device().attach(&apos;com.eduu.bang&apos;)</span><br><span class="line">script = process.create_script(jscode)</span><br><span class="line">script.on(&apos;message&apos;, on_message)</span><br><span class="line">script.load()</span><br><span class="line">sys.stdin.read()</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/12/15/nixiang/1576392914(1" alt="1576392914(1)">.jpg)</p>
+<p><img src="/2019/12/15/nixiang/1576392955(1" alt="1576392955(1)">.jpg)</p>
+<p>由于这里是用frida工具把sign直接改了，所以抓包的时候我们只要改mobile为13712345678就行了</p>
 
     </div>
 
@@ -266,15 +295,15 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
+                <a href="/2019/09/04/afl/" rel="next" title="利用afl进行二进制漏洞挖掘">
+                  <i class="fa fa-chevron-left"></i> 利用afl进行二进制漏洞挖掘
+                </a>
+              
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2018/10/18/calendar/" rel="prev" title="2018护网杯calendar WP">
-                  2018护网杯calendar WP <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -349,7 +378,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#抓包分析"><span class="nav-number">1.</span> <span class="nav-text">抓包分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#脱壳"><span class="nav-number">2.</span> <span class="nav-text">脱壳</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用frida工具直接hook改手机号码"><span class="nav-number">3.</span> <span class="nav-text">用frida工具直接hook改手机号码</span></a></li></ol></div>
             
 
           </div>
